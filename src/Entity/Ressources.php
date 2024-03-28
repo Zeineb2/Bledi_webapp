@@ -29,9 +29,9 @@ class Ressources
     private ?string $imgRessource = null;
 
 
-    #[ORM\ManyToOne(inversedBy: 'Municipaties')]
+    #[ORM\ManyToOne(targetEntity: Municipaties::class, inversedBy: 'ressources')]
     private ?Municipaties $idMuni = null;
-
+    
     public function getIdRessource(): ?int
     {
         return $this->idRessource;
