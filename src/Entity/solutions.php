@@ -5,67 +5,33 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Solutions
- *
- * @ORM\Table(name="solutions", indexes={@ORM\Index(name="FK_ID_rec", columns={"ID_rec"})})
- * @ORM\Entity
- */
+
+#[ORM\Entity(repositoryClass:SolutionsRepository::class)]
 class Solutions
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="ID_sol", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idSol;
+    #[ORM\ID]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idSol = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="description_sol", type="string", length=255, nullable=false)
-     */
-    private $descriptionSol;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $descriptionSol = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateD_sol", type="date", nullable=false)
-     */
-    private $datedSol;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $datedSol = null;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="dateF_sol", type="date", nullable=false)
-     */
-    private $datefSol;
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $datefSol = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="etat_sol", type="string", length=255, nullable=false)
-     */
-    private $etatSol;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $etatSol = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="budget_sol", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $budgetSol;
+    #[ORM\Column(type: 'float', nullable: true)]
+    private ?float $budgetSol = null;
 
-    /**
-     * @var \Reclamations
-     *
-     * @ORM\ManyToOne(targetEntity="Reclamations")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_rec", referencedColumnName="ID_rec")
-     * })
-     */
-    private $idRec;
+    #[ORM\ManyToOne(targetEntity: Reclamations::class)]
+    #[ORM\JoinColumn(name: 'ID_rec', referencedColumnName: 'ID_rec')]
+    private ?Reclamations $idRec = null;
 
     public function getIdSol(): ?int
     {

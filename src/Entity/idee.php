@@ -1,46 +1,24 @@
 <?php
 
 namespace App\Entity;
-
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Idee
- *
- * @ORM\Table(name="idee")
- * @ORM\Entity
- */
+#[ORM\Table(name: "idee")]
+#[ORM\Entity]
 class Idee
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="ID_idee", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idIdee;
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: "IDENTITY")]
+    #[ORM\Column(name: "ID_idee", type: "integer", nullable: false)]
+    private ?int $idIdee;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Type_idee", type="string", length=255, nullable=false)
-     */
-    private $typeIdee;
+    #[ORM\Column(name: "Type_idee", type: "string", length: 255, nullable: false)]
+    private ?string $typeIdee;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Description_idee", type="string", length=255, nullable=false)
-     */
-    private $descriptionIdee;
+    #[ORM\Column(name: "Description_idee", type: "string", length: 255, nullable: false)]
+    private ?string $descriptionIdee;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="Image_idee", type="blob", length=65535, nullable=false)
-     */
+    #[ORM\Column(name: "Image_idee", type: "blob", length: 65535, nullable: false)]
     private $imageIdee;
 
     public function getIdIdee(): ?int
@@ -53,10 +31,9 @@ class Idee
         return $this->typeIdee;
     }
 
-    public function setTypeIdee(string $typeIdee)
+    public function setTypeIdee(string $typeIdee): static
     {
         $this->typeIdee = $typeIdee;
-
         return $this;
     }
 
@@ -65,10 +42,9 @@ class Idee
         return $this->descriptionIdee;
     }
 
-    public function setDescriptionIdee(string $descriptionIdee)
+    public function setDescriptionIdee(string $descriptionIdee): static
     {
         $this->descriptionIdee = $descriptionIdee;
-
         return $this;
     }
 
@@ -77,12 +53,11 @@ class Idee
         return $this->imageIdee;
     }
 
-    public function setImageIdee($imageIdee)
+    public function setImageIdee($imageIdee): static
     {
         $this->imageIdee = $imageIdee;
-
         return $this;
     }
-
-
 }
+
+
