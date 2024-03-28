@@ -2,52 +2,28 @@
 
 namespace App\Entity;
 
+use App\Repository\MunicipatiesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Municipaties
- *
- * @ORM\Table(name="municipaties")
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: MunicipatiesRepository::class)]
 class Municipaties
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="ID_muni", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idMuni;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idMuni = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_muni", type="string", length=255, nullable=false)
-     */
-    private $nomMuni;
+    #[ORM\Column(length: 255)]
+    private ?string $nomMuni = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adresse_muni", type="string", length=255, nullable=false)
-     */
-    private $adresseMuni;
+    #[ORM\Column(length: 255)]
+    private ?string $adresseMuni = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="etat_muni", type="string", length=255, nullable=false)
-     */
-    private $etatMuni;
+    #[ORM\Column(length: 255)]
+    private ?string $etatMuni = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="rating_muni", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $ratingMuni;
+    #[ORM\Column]
+    private ?float $ratingMuni = null;
 
     public function getIdMuni(): ?int
     {

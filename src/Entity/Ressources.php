@@ -2,62 +2,35 @@
 
 namespace App\Entity;
 
+use App\Repository\RessourcesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * Ressources
- *
- * @ORM\Table(name="ressources", indexes={@ORM\Index(name="FK_ID_muni", columns={"ID_muni"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: RessourcesRepository::class)]
+
 class Ressources
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="ID_ressource", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idRessource;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $idRessource = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nom_ressource", type="string", length=255, nullable=false)
-     */
-    private $nomRessource;
+    #[ORM\Column(length: 255)]
+    private ?string $nomRessource = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nbr_ressource", type="integer", nullable=false)
-     */
-    private $nbrRessource;
+    #[ORM\Column]
+    private ?int $nbrRessource = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="nbr_dispo_ressource", type="integer", nullable=false)
-     */
-    private $nbrDispoRessource;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="img_ressource", type="string", length=10000, nullable=false)
-     */
-    private $imgRessource;
+    #[ORM\Column]
+    private ?int $nbrDispoRessource = null;
 
-    /**
-     * @var \Municipaties
-     *
-     * @ORM\ManyToOne(targetEntity="Municipaties")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_muni", referencedColumnName="ID_muni")
-     * })
-     */
-    private $idMuni;
+
+    #[ORM\Column(length: 255)]
+    private ?string $imgRessource = null;
+
+
+    #[ORM\ManyToOne(inversedBy: 'Municipaties')]
+    private ?Municipaties $idMuni = null;
 
     public function getIdRessource(): ?int
     {
