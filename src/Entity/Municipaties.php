@@ -28,14 +28,6 @@ class Municipaties
     private ?float $ratingMuni = null;
 
 
-#[ORM\OneToMany(targetEntity: Ressources::class, mappedBy: 'idMuni')]
-private $ressources;
-
-public function __construct()
-{
-    $this->ressources = new ArrayCollection();
-}
-
 
     public function getIdMuni(): ?int
     {
@@ -90,35 +82,7 @@ public function __construct()
         return $this;
     }
 
-    /**
-     * @return Collection<int, Ressources>
-     */
-    public function getRessources(): Collection
-    {
-        return $this->ressources;
-    }
-
-    public function addRessource(Ressources $ressource): static
-    {
-        if (!$this->ressources->contains($ressource)) {
-            $this->ressources->add($ressource);
-            $ressource->setIdMuni($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRessource(Ressources $ressource): static
-    {
-        if ($this->ressources->removeElement($ressource)) {
-            // set the owning side to null (unless already changed)
-            if ($ressource->getIdMuni() === $this) {
-                $ressource->setIdMuni(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
 
 }
