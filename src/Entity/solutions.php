@@ -110,5 +110,12 @@ class Solutions
         return $this;
     }
 
+    public function setIdSol(string $idSol): static
+    {
+        $this->idSol = $idSol;
+
+        return $this;
+    }
+
 
 }

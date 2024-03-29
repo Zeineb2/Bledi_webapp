@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Table(name: "idee")]
-#[ORM\Entity]
+
+#[ORM\Entity(repositoryClass:IdeeRepository::class)]
+
 class Idee
 {
     #[ORM\Id]
