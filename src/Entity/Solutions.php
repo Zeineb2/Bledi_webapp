@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass:SolutionsRepository::class)]
 class Solutions
 {
-    #[ORM\ID]
+    #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $idSol = null;
@@ -110,12 +110,6 @@ class Solutions
         return $this;
     }
 
-    public function setIdSol(string $idSol): static
-    {
-        $this->idSol = $idSol;
-
-        return $this;
-    }
-
+    // Remove setIdSol method
 
 }
