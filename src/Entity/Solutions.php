@@ -33,9 +33,10 @@ class Solutions
     #[ORM\Column(type: 'float', nullable: true)]
     private ?float $budgetSol = null;
 
-    #[ORM\ManyToOne(targetEntity: Reclamations::class)]
-    #[ORM\JoinColumn(name: 'ID_rec', referencedColumnName: 'ID_rec')]
-    private ?Reclamations $idRec = null;
+  /*  #[ORM\ManyToOne(targetEntity: Reclamations::class)]
+    #[ORM\JoinColumn(name: 'ID_rec', referencedColumnName: 'ID_rec' ,nullable: true)]*/
+    #[ORM\Column( type: "integer", nullable: false)]
+    private /*?Reclamations*/ ?int $idRec = null;
 
     public function getIdSol(): ?int
     {

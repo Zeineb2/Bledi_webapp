@@ -18,22 +18,23 @@ class Reclamations
      private ?int $idRec;
 
 
-    #[ORM\Column(name: "categorieId", type: "integer", nullable: false)]
+    #[ORM\Column(name: "categorie_id", type: "integer", nullable: false)]
     private $categorieId;
 
-    #[ORM\Column(name: "localisationRec", type: "string", length: 255, nullable: false)]
+    #[ORM\Column(name: "localisation_rec", type: "string", length: 255, nullable: false)]
     private $localisationRec;
 
-    #[ORM\Column(name: "descriptionRec", type: "string", length: 255, nullable: false)]
+    #[ORM\Column(name: "description_rec", type: "string", length: 255, nullable: false)]
     private $descriptionRec;
 
-    #[ORM\Column(name: "imgRec", type: "blob", length: 65535, nullable: false)]
+
+    #[ORM\Column(name: "img_rec", type: "blob", length: 65535, nullable: false)]
     private $imgRec;
 
     #[ORM\Column(name: "status", type: "string", length: 255, nullable: false)]
     private $status;
 
-    #[ORM\Column(name: "cinCit", type: "integer", nullable: false)]
+    #[ORM\Column(name: "CIN_cit", type: "integer", nullable: false)]
     private $cinCit;
 
     #[ORM\Column(type: 'date', nullable: true)]

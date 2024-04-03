@@ -2,6 +2,17 @@
 
 {% block title %}Bledi Solutions{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Style for table rows on hover */
+        table tbody tr:hover {
+            background-color: #f5f5f5; /* Change background color on hover */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <div class="card">
         <div class="card-body">
@@ -30,25 +41,22 @@
                                 <th>DatefSol</th>
                                 <th>EtatSol</th>
                                 <th>BudgetSol</th>
-                                <th>Actions</th>
+                                <!-- Remove the 'Actions' column -->
                             </tr>
                             </thead>
                             <tbody>
                             {% for solution in solutions %}
-                                <tr>
+                                <tr class="solution-row" data-url="{{ path('app_solutions_show', {'idSol': solution.idSol}) }}">
                                     <!--<td>{{ solution.idSol }}</td>-->
                                     <td>{{ solution.descriptionSol }}</td>
                                     <td>{{ solution.datedSol ? solution.datedSol|date('Y-m-d') : '' }}</td>
                                     <td>{{ solution.datefSol ? solution.datefSol|date('Y-m-d') : '' }}</td>
                                     <td><span class="badge badge-info">{{ solution.etatSol }}</span></td>
                                     <td>{{ solution.budgetSol }}</td>
-                                    <td>
-                                        <button class="btn btn-outline-primary">View</button>
-                                    </td>
                                 </tr>
                             {% else %}
                                 <tr>
-                                    <td colspan="6">No records found</td>
+                                    <td colspan="5">No records found</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -58,4 +66,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const solutionRows = document.querySelectorAll('.solution-row');
+            solutionRows.forEach(row => {
+                row.addEventListener('dblclick', function () {
+                    const url = this.dataset.url;
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
 {% endblock %}
