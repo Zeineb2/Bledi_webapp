@@ -2,74 +2,59 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Reclamations
- *
- * @ORM\Table(name="reclamations", indexes={@ORM\Index(name="categorie_id", columns={"categorie_id", "CIN_cit"})})
  * @ORM\Entity
  */
 class Reclamations
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="ID_rec", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      */
     private $idRec;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="categorie_id", type="integer", nullable=false)
+     * @ORM\Column(type="integer")
      */
     private $categorieId;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="localisation_rec", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $localisationRec;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description_rec", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $descriptionRec;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="img_rec", type="blob", length=65535, nullable=false)
+     * @ORM\Column(type="blob")
      */
     private $imgRec;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="status", type="string", length=255, nullable=false)
+     * @ORM\Column(type="string", length=255)
      */
     private $status;
 
     /**
-     * @var int|null
-     *
-     * @ORM\Column(name="CIN_cit", type="integer", nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $cinCit;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="date", nullable=false)
+     * @ORM\Column(type="date")
      */
     private $date;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Solutions::class, mappedBy="idRec")
+     */
+    private $solutions;
 
     public function getIdRec(): ?int
     {

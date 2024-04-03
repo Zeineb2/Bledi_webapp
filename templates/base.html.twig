@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <title>{% block title %}Welcome!{% endblock %}</title>
+  <title>{% block title %}Bledi!{% endblock %}</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
   {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
   {% include 'partials_back/css.html.twig' %}
@@ -17,12 +17,12 @@
 <div class="container-scroller">
   {% include 'partials_back/sidebar.html.twig' %}
   <div class="container-fluid page-body-wrapper">
-  {% include 'partials_back/settings-panel.html.twig' %}
-  {% include 'partials_back/navbar.html.twig' %}
+    {% include 'partials_back/settings-panel.html.twig' %}
+    {% include 'partials_back/navbar.html.twig' %}
+    <div class="main-panel">
 
-  {% block body %}{% endblock %}
-    {% include 'partials_back/footer.html.twig' %}
-  </div>
+      {% include 'partials_back/footer.html.twig' %}
+    </div>
   </div>
 </div>
 {% block javascripts %}

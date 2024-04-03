@@ -2,29 +2,26 @@
 
 namespace App\Form;
 
-use App\Entity\Solutions;
+use App\Entity\Idee;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class FormSolType extends AbstractType
+class IdeeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('descriptionSol')
-            ->add('datedSol')
-            ->add('datefSol')
-            ->add('etatSol')
-            ->add('budgetSol')
-            ->add('idRec')
+            ->add('typeIdee')
+            ->add('descriptionIdee')
+            ->add('imageIdee')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Solutions::class,
+            'data_class' => Idee::class,
         ]);
     }
 }
