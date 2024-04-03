@@ -3,41 +3,59 @@
 {% block title %}Bledi Solutions{% endblock %}
 
 {% block body %}
-    <h1>Solutions</h1>
-
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <!--<th>IdSol</th>-->
-                <th>DescriptionSol</th>
-                <th>DatedSol</th>
-                <th>DatefSol</th>
-                <th>EtatSol</th>
-                <th>BudgetSol</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for solution in solutions %}
-            <tr>
-                <!--<td>{{ solution.idSol }}</td>-->
-                <td>{{ solution.descriptionSol }}</td>
-                <td>{{ solution.datedSol ? solution.datedSol|date('Y-m-d') : '' }}</td>
-                <td>{{ solution.datefSol ? solution.datefSol|date('Y-m-d') : '' }}</td>
-                <td>{{ solution.etatSol }}</td>
-                <td>{{ solution.budgetSol }}</td>
-                <td>
-                    <a href="{{ path('app_solutions_show', {'idSol': solution.idSol}) }}">show</a>
-                    <a href="{{ path('app_solutions_edit', {'idSol': solution.idSol}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_solutions_new') }}">Create new</a>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Data table</h4>
+            <div class="row mb-3">
+                <div class="col-sm-12 col-md-6 text-right">
+                    <div id="order-listing_filter" class="dataTables_filter">
+                        <label>
+                            <input type="search" class="form-control" placeholder="Search" aria-controls="order-listing">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <a href="{{ path('app_solutions_new') }}" class="btn btn-primary">Create New</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table id="order-listing" class="table">
+                            <thead>
+                            <tr>
+                                <!--<th>IdSol</th>-->
+                                <th>DescriptionSol</th>
+                                <th>DatedSol</th>
+                                <th>DatefSol</th>
+                                <th>EtatSol</th>
+                                <th>BudgetSol</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for solution in solutions %}
+                                <tr>
+                                    <!--<td>{{ solution.idSol }}</td>-->
+                                    <td>{{ solution.descriptionSol }}</td>
+                                    <td>{{ solution.datedSol ? solution.datedSol|date('Y-m-d') : '' }}</td>
+                                    <td>{{ solution.datefSol ? solution.datefSol|date('Y-m-d') : '' }}</td>
+                                    <td><span class="badge badge-info">{{ solution.etatSol }}</span></td>
+                                    <td>{{ solution.budgetSol }}</td>
+                                    <td>
+                                        <button class="btn btn-outline-primary">View</button>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">No records found</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
