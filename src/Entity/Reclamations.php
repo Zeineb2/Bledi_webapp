@@ -2,6 +2,10 @@
 
 namespace App\Entity;
 
+use App\Repository\ReclamationsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass:ReclamationsRepository::class)]
@@ -38,6 +42,11 @@ class Reclamations
 
     #[ORM\OneToMany(targetEntity: Solutions::class, mappedBy: "idRec")]
     private $solutions;
+
+    public function __construct()
+    {
+        $this->solutions = new ArrayCollection();
+    }
 
 
 
@@ -126,6 +135,36 @@ class Reclamations
     public function setDate(\DateTimeInterface $date)
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Solutions>
+     */
+    public function getSolutions(): Collection
+    {
+        return $this->solutions;
+    }
+
+    public function addSolution(Solutions $solution): static
+    {
+        if (!$this->solutions->contains($solution)) {
+            $this->solutions->add($solution);
+            $solution->setIdRec($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSolution(Solutions $solution): static
+    {
+        if ($this->solutions->removeElement($solution)) {
+            // set the owning side to null (unless already changed)
+            if ($solution->getIdRec() === $this) {
+                $solution->setIdRec(null);
+            }
+        }
 
         return $this;
     }
