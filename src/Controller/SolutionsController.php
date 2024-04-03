@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Solutions;
-use App\Entity\SolutionsRepository;
+use App\Repository\SolutionsRepository;
 use App\Form\SolutionsType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

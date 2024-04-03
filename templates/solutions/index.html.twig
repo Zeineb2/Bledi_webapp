@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Solutions index{% endblock %}
+{% block title %}Bledi Solutions{% endblock %}
 
 {% block body %}
-    <h1>Solutions index</h1>
+    <h1>Solutions</h1>
 
-    <table class="table">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <th>IdSol</th>
+                <!--<th>IdSol</th>-->
                 <th>DescriptionSol</th>
                 <th>DatedSol</th>
                 <th>DatefSol</th>
@@ -20,7 +20,7 @@
         <tbody>
         {% for solution in solutions %}
             <tr>
-                <td>{{ solution.idSol }}</td>
+                <!--<td>{{ solution.idSol }}</td>-->
                 <td>{{ solution.descriptionSol }}</td>
                 <td>{{ solution.datedSol ? solution.datedSol|date('Y-m-d') : '' }}</td>
                 <td>{{ solution.datefSol ? solution.datefSol|date('Y-m-d') : '' }}</td>

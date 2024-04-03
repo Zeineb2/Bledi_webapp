@@ -20,7 +20,7 @@
     {% include 'partials_back/settings-panel.html.twig' %}
     {% include 'partials_back/navbar.html.twig' %}
     <div class="main-panel">
-
+      {% block body %}{% endblock body %}
       {% include 'partials_back/footer.html.twig' %}
     </div>
   </div>

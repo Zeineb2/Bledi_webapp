@@ -4,57 +4,42 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass:ReclamationsRepository::class)]
 class Reclamations
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $idRec;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+     #[ORM\Id]
+     #[ORM\GeneratedValue(strategy: "IDENTITY")]
+     #[ORM\Column(name: "ID_rec", type: "integer", nullable: false)]
+     private ?int $idRec;
+
+
+    #[ORM\Column(name: "categorieId", type: "integer", nullable: false)]
     private $categorieId;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(name: "localisationRec", type: "string", length: 255, nullable: false)]
     private $localisationRec;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(name: "descriptionRec", type: "string", length: 255, nullable: false)]
     private $descriptionRec;
 
-    /**
-     * @ORM\Column(type="blob")
-     */
+    #[ORM\Column(name: "imgRec", type: "blob", length: 65535, nullable: false)]
     private $imgRec;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(name: "status", type: "string", length: 255, nullable: false)]
     private $status;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(name: "cinCit", type: "integer", nullable: false)]
     private $cinCit;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: 'date', nullable: true)]
     private $date;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Solutions::class, mappedBy="idRec")
-     */
+
+    #[ORM\OneToMany(targetEntity: Solutions::class, mappedBy: "idRec")]
     private $solutions;
+
+
 
     public function getIdRec(): ?int
     {
