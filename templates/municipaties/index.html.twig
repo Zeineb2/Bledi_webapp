@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Municipaties index{% endblock %}
+
+{% block body %}
+    <h1>Municipaties index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdMuni</th>
+                <th>NomMuni</th>
+                <th>AdresseMuni</th>
+                <th>EtatMuni</th>
+                <th>RatingMuni</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for municipaty in municipaties %}
+            <tr>
+                <td>{{ municipaty.idMuni }}</td>
+                <td>{{ municipaty.nomMuni }}</td>
+                <td>{{ municipaty.adresseMuni }}</td>
+                <td>{{ municipaty.etatMuni }}</td>
+                <td>{{ municipaty.ratingMuni }}</td>
+                <td>
+                    <a href="{{ path('app_municipaties_show', {'idMuni': municipaty.idMuni}) }}">show</a>
+                    <a href="{{ path('app_municipaties_edit', {'idMuni': municipaty.idMuni}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_municipaties_new') }}">Create new</a>
+{% endblock %}
