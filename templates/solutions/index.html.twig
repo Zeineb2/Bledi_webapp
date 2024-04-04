@@ -18,11 +18,9 @@
         <div class="card-body">
             <h4 class="card-title">Data table</h4>
             <div class="row mb-3">
-                <div class="col-sm-12 col-md-6 text-right">
+                <div class="col-sm-12 col-md-6">
                     <div id="order-listing_filter" class="dataTables_filter">
-                        <label>
-                            <input type="search" class="form-control" placeholder="Search" aria-controls="order-listing">
-                        </label>
+                        <input type="search" class="form-control" id="searchInput" placeholder="Search">
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
@@ -69,13 +67,41 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const solutionRows = document.querySelectorAll('.solution-row');
-            solutionRows.forEach(row => {
-                row.addEventListener('dblclick', function () {
-                    const url = this.dataset.url;
-                    window.location.href = url;
+            const searchInput = document.getElementById('searchInput');
+            const rows = document.querySelectorAll('.solution-row');
+
+            // Function to handle row double-click
+            function handleRowDoubleClick() {
+                const url = this.dataset.url;
+                window.location.href = url;
+            }
+
+            // Add event listener for double-click to each row
+            rows.forEach(row => {
+                row.addEventListener('dblclick', handleRowDoubleClick);
+            });
+
+            // Add event listener for keyup event on the search input
+            searchInput.addEventListener('keyup', function (event) {
+                const searchTerm = event.target.value.trim().toLowerCase();
+
+                rows.forEach(row => {
+                    let found = false;
+                    row.querySelectorAll('td').forEach(cell => {
+                        const textContent = cell.textContent.trim().toLowerCase();
+                        if (textContent.includes(searchTerm)) {
+                            found = true;
+                        }
+                    });
+
+                    if (found) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
                 });
             });
         });
     </script>
+
 {% endblock %}

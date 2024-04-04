@@ -14,7 +14,7 @@ class Reclamations
 
      #[ORM\Id]
      #[ORM\GeneratedValue(strategy: "IDENTITY")]
-     #[ORM\Column(name: "ID_rec", type: "integer", nullable: false)]
+     #[ORM\Column(name: "IDRec", type: "integer", nullable: false)]
      private ?int $idRec;
 
 
