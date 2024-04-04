@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Form\RegisterForm;
 use App\Form\UtilisateurType;
 use App\Repository\UtilisateurRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,7 +18,7 @@ class UtilisateurController extends AbstractController
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
     public function index(UtilisateurRepository $utilisateurRepository): Response
     {
-        return $this->render('utilisateur/index.html.twig', [
+        return $this->render('utilisateur/admin/index.html.twig', [
             'utilisateurs' => $utilisateurRepository->findAll(),
         ]);
     }
@@ -26,19 +27,27 @@ class UtilisateurController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $utilisateur = new Utilisateur();
-        $form = $this->createForm(UtilisateurType::class, $utilisateur);
+        $form = $this->createForm(RegisterForm::class, $utilisateur);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer le mot de passe depuis le formulaire
+            $plainPassword = $form->get('pwd')->getData();
+            // Hacher le mot de passe
+            $hashedPassword = password_hash($plainPassword, PASSWORD_DEFAULT);
+            // Assigner le mot de passe haché à l'entité Utilisateur
+            $utilisateur->setPwd($hashedPassword);
+
+            // Persister l'entité Utilisateur
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
+            // Rediriger vers la page d'index des utilisateurs après création réussie
+            return $this->redirectToRoute('app_utilisateur_index');
         }
 
-        return $this->renderForm('utilisateur/register.html.twig', [
-            'utilisateur' => $utilisateur,
-            'form' => $form,
+        return $this->render('utilisateur/register.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

@@ -19,7 +19,7 @@ class UtilisateurType extends AbstractType
             ->add('adresse')
             ->add('rate')
             ->add('pwd')
-            ->add('role')
+            ->add('roles')
             ->add('posteAg')
             ->add('idMuni')
         ;

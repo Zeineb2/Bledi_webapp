@@ -1,3 +1,13 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+# Route pour afficher le formulaire de connexion
+app_login:
+    path: /login
+    controller: App\Controller\LoginController::login
+
+# Route pour gérer la déconnexion de l'utilisateur
+app_logout:
+    path: /logout
+    controller: App\Controller\LoginController::logout

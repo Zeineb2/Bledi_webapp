@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
+
+use  Symfony\Component\Validator\Constraints as  Assert;
 /** 
  * Utilisateur
  *
@@ -22,6 +24,8 @@ class Utilisateur
      */
     #[ORM\Id]
     #[ORM\Column(length: 10)]
+    #[Assert\NotBlank(message:'veuillez saisir votre CIN')]
+    #[Assert\Length(min:8, max:8 ,minMessage:'minimum 8 chiffres',maxMessage:'maximum 8 chiffres')]
     private ?int $cin; 
 
     /**
@@ -30,7 +34,8 @@ class Utilisateur
      * @ORM\Column(name="nom", type="string", length=255, nullable=false)
      */
     #[ORM\Column(length: 255)]
-    private ?string $nom=null;
+    #[Assert\NotBlank(message:'veuillez saisir votre nom')]
+    private ?string $nom;
 
     /**
      * @var string
@@ -38,7 +43,9 @@ class Utilisateur
      * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     #[ORM\Column(length: 255)]
-    private ?string $email;
+    #[Assert\Blank(message:'veuillez saisir votre adresse Email')]
+    #[Assert\Email(message:'Email invalide')]
+    private ?string $email=null;
 
     /**
      * @var int
@@ -46,7 +53,9 @@ class Utilisateur
      * @ORM\Column(name="tel", type="integer", nullable=false)
      */
     #[ORM\Column]
-    private ?int $tel;
+    #[Assert\NotBlank(message:'veuillez saisir votre numéro de téléphone')]
+    #[Assert\Length(min:8)]
+    private ?int $tel=null;
 
     /**
      * @var string
@@ -54,7 +63,9 @@ class Utilisateur
      * @ORM\Column(name="adresse", type="string", length=255, nullable=false)
      */
     #[ORM\Column(length: 255)]
-    private ?string $adresse;
+    #[Assert\NotBlank]
+    #[Assert\Email(message:'Email invalide')]
+    private ?string $adresse=null;
 
     /**
      * @var int|null
@@ -63,6 +74,7 @@ class Utilisateur
      */
     
     #[ORM\Column]
+    
     private ?int $rate = 0;
 
     /**
@@ -71,7 +83,9 @@ class Utilisateur
      * @ORM\Column(name="pwd", type="string", length=255, nullable=false)
      */
     #[ORM\Column(length: 255)]
-    private ?string $pwd;
+    #[Assert\NotBlank]
+    #[Assert\Email(message:'Email invalide')]
+    private ?string $pwd=null;
 
     /**
      * @var string
@@ -79,7 +93,7 @@ class Utilisateur
      * @ORM\Column(name="role", type="string", length=255, nullable=false)
      */
     #[ORM\Column(length: 255)]
-    private ?string $role='citoyen';
+    private ?string $roles='citoyen';
 
     /**
      * @var string
@@ -96,7 +110,8 @@ class Utilisateur
      */
     
     #[ORM\Column]
-    private ?int $idMuni;
+    private ?int $idMuni=null;
+
 
     public function getCin(): ?int
     {
@@ -176,19 +191,19 @@ class Utilisateur
 
     public function setPwd(string $pwd)
     {
-        $this->pwd = $pwd;
-
+        $hashedPwd = password_hash($pwd, PASSWORD_DEFAULT);
+        $this->pwd = $hashedPwd;
         return $this;
     }
 
-    public function getRole(): ?string
+    public function getRoles(): ?string
     {
-        return $this->role;
+        return $this->roles;
     }
 
-    public function setRole(string $role)
+    public function setRoles(string $roles)
     {
-        $this->role = $role;
+        $this->roles = $roles;
 
         return $this;
     }

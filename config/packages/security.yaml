@@ -4,37 +4,42 @@ security:
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    
+
     providers:
-        users_in_memory: { memory: null }
+        in_memory:
+            memory:
+                # Utilisateurs avec leurs rôles
+                users:
+                    admin:
+                        password: '$2a$10$gNympqLxzCRbuHm1U.si4.XMAON0bTWQ0ihp9/gitqJ430oe7.ycq' # Mot de passe hashé pour "admin"
+                        roles: ['admin']
+                    citoyen:
+                        password: '$2a$10$OmP5p8i3CBf3Erj5MN64weT2fN7KHimrt8NIseXAkSOFoDHmJ/UvC' # Mot de passe hashé pour "citoyen"
+                        roles: ['citoyen']
+                    agent:
+                        password: '$2a$10$9zfb.PmhVNQx5rJ/o/viauC3kEH601b1XMfcM41UWQMKJ8sr3ZwIa' # Mot de passe hashé pour "agent"
+                        roles: ['agent']
+
+    # Configuration des pare-feux
     firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
+        # Configuration du pare-feu principal
         main:
-            lazy: true
-            provider: users_in_memory
+            provider: in_memory # Utilisation du fournisseur d'utilisateurs en mémoire
+            # Autres configurations du pare-feu principal...
+            # Par exemple, configurer le système d'authentification (form_login, etc.)
+            form_login:
+                login_path: app_login
+                check_path: app_login
+            logout:
+                path: app_logout
+                target: app_login
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
+    # Activation de la sécurité pour différentes parties de l'application
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        # Exemple d'accès restreint à certaines URL en fonction des rôles
+        - { path: ^/admin, roles: admin } # Accès restreint aux utilisateurs avec le rôle "ROLE_ADMIN"
+        - { path: ^/citoyen, roles: citoyen } # Accès restreint aux utilisateurs avec le rôle "ROLE_CITOYEN"
+        - { path: ^/agent, roles: agent } # Accès restreint aux utilisateurs avec le rôle "ROLE_AGENT"
+        # Autres configurations d'accès restreint...
 
-when@test:
-    security:
-        password_hashers:
-            # By default, password hashers are resource intensive and take time. This is
-            # important to generate secure password hashes. In tests however, secure hashes
-            # are not important, waste resources and increase test times. The following
-            # reduces the work factor to the lowest possible values.
-            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
-                algorithm: auto
-                cost: 4 # Lowest possible value for bcrypt
-                time_cost: 3 # Lowest possible value for argon
-                memory_cost: 10 # Lowest possible value for argon
