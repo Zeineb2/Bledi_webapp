@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Municipaties;
-use App\Form\MunicipatiesType;
+use App\Form\Municipaties1Type;
 use App\Repository\MunicipatiesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ class MunicipatiesController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $municipaty = new Municipaties();
-        $form = $this->createForm(MunicipatiesType::class, $municipaty);
+        $form = $this->createForm(Municipaties1Type::class, $municipaty);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,7 +42,7 @@ class MunicipatiesController extends AbstractController
         ]);
     }
 
-    #[Route('/{idMuni}', name: 'app_municipaties_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_municipaties_show', methods: ['GET'])]
     public function show(Municipaties $municipaty): Response
     {
         return $this->render('municipaties/show.html.twig', [
@@ -50,10 +50,10 @@ class MunicipatiesController extends AbstractController
         ]);
     }
 
-    #[Route('/{idMuni}/edit', name: 'app_municipaties_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_municipaties_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Municipaties $municipaty, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(MunicipatiesType::class, $municipaty);
+        $form = $this->createForm(Municipaties1Type::class, $municipaty);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,10 +68,10 @@ class MunicipatiesController extends AbstractController
         ]);
     }
 
-    #[Route('/{idMuni}', name: 'app_municipaties_delete', methods: ['POST'])]
+    #[Route('/{id}', name: 'app_municipaties_delete', methods: ['POST'])]
     public function delete(Request $request, Municipaties $municipaty, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$municipaty->getIdMuni(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$municipaty->getId(), $request->request->get('_token'))) {
             $entityManager->remove($municipaty);
             $entityManager->flush();
         }

@@ -28,9 +28,9 @@ class Ressources
     #[ORM\Column(length: 255)]
     private ?string $imgRessource = null;
 
-    #[ORM\ManyToOne(inversedBy: 'Municipaties')]
+    #[ORM\ManyToOne(inversedBy: 'ressources')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Municipaties $idMuni = null;
+    private ?Municipaties $id_muni = null;
     
     public function getIdRessource(): ?int
     {
@@ -87,15 +87,14 @@ class Ressources
 
     public function getIdMuni(): ?Municipaties
     {
-        return $this->idMuni;
+        return $this->id_muni;
     }
 
-    public function setIdMuni(?Municipaties $idMuni)
+    public function setIdMuni(?Municipaties $id_muni): static
     {
-        $this->idMuni = $idMuni;
+        $this->id_muni = $id_muni;
 
         return $this;
     }
-
 
 }

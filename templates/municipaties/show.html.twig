@@ -8,8 +8,8 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>IdMuni</th>
-                <td>{{ municipaty.idMuni }}</td>
+                <th>Id</th>
+                <td>{{ municipaty.id }}</td>
             </tr>
             <tr>
                 <th>NomMuni</th>
@@ -32,7 +32,7 @@
 
     <a href="{{ path('app_municipaties_index') }}">back to list</a>
 
-    <a href="{{ path('app_municipaties_edit', {'idMuni': municipaty.idMuni}) }}">edit</a>
+    <a href="{{ path('app_municipaties_edit', {'id': municipaty.id}) }}">edit</a>
 
     {{ include('municipaties/_delete_form.html.twig') }}
 {% endblock %}

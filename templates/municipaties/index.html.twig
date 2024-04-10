@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>IdMuni</th>
+                <th>Id</th>
                 <th>NomMuni</th>
                 <th>AdresseMuni</th>
                 <th>EtatMuni</th>
@@ -19,14 +19,14 @@
         <tbody>
         {% for municipaty in municipaties %}
             <tr>
-                <td>{{ municipaty.idMuni }}</td>
+                <td>{{ municipaty.id }}</td>
                 <td>{{ municipaty.nomMuni }}</td>
                 <td>{{ municipaty.adresseMuni }}</td>
                 <td>{{ municipaty.etatMuni }}</td>
                 <td>{{ municipaty.ratingMuni }}</td>
                 <td>
-                    <a href="{{ path('app_municipaties_show', {'idMuni': municipaty.idMuni}) }}">show</a>
-                    <a href="{{ path('app_municipaties_edit', {'idMuni': municipaty.idMuni}) }}">edit</a>
+                    <a href="{{ path('app_municipaties_show', {'id': municipaty.id}) }}">show</a>
+                    <a href="{{ path('app_municipaties_edit', {'id': municipaty.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

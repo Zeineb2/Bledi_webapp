@@ -13,8 +13,8 @@ class Municipaties
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $idMuni = null;
+    #[ORM\Column(name: "ID_muni")]
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nomMuni = null;
@@ -28,7 +28,7 @@ class Municipaties
     #[ORM\Column]
     private ?float $ratingMuni = null;
 
-    #[ORM\OneToMany(mappedBy: 'idMuni', targetEntity: Ressources::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'id_muni', targetEntity: Ressources::class)]
     private Collection $ressources;
 
     public function __construct()
@@ -37,9 +37,9 @@ class Municipaties
     }
 
 
-    public function getIdMuni(): ?int
+    public function getId(): ?int
     {
-        return $this->idMuni;
+        return $this->id_muni;
     }
 
     public function getNomMuni(): ?string
@@ -119,8 +119,5 @@ class Municipaties
 
         return $this;
     }
-
-   
-
 
 }

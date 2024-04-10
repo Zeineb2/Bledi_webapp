@@ -2,28 +2,27 @@
 
 namespace App\Form;
 
-use App\Entity\Ressources;
+use App\Entity\Municipaties;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RessourcesType extends AbstractType
+class Municipaties1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomRessource')
-            ->add('nbrRessource')
-            ->add('nbrDispoRessource')
-            ->add('imgRessource')
-            ->add('idMuni')
+            ->add('nomMuni')
+            ->add('adresseMuni')
+            ->add('etatMuni')
+            ->add('ratingMuni')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Ressources::class,
+            'data_class' => Municipaties::class,
         ]);
     }
 }
