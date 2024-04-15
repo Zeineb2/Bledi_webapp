@@ -2,29 +2,33 @@
 
 namespace App\Form;
 
-use App\Entity\Solutions;
+use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SolutionsType extends AbstractType
+class UtilisateurType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('descriptionSol')
-            ->add('datedSol')
-            ->add('datefSol')
-            ->add('etatSol')
-            ->add('budgetSol')
-            ->add('idRec')
+            ->add('nom')
+            ->add('email')
+            ->add('tel')
+            ->add('adresse')
+            ->add('rate')
+            ->add('pwd')
+            ->add('role')
+            ->add('posteAg')
+            ->add('idMuni')
+            ->add('isVerified')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Solutions::class,
+            'data_class' => Utilisateur::class,
         ]);
     }
 }
