@@ -6,9 +6,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 
 class Utilisateur implements UserInterface
 {
@@ -20,7 +22,7 @@ class Utilisateur implements UserInterface
 
     
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    private ?string $nom ;
 
     
     #[ORM\Column(length: 255)]
@@ -43,7 +45,7 @@ class Utilisateur implements UserInterface
 
     
     #[ORM\Column(length: 255)]
-    private ?string $role;
+    private ?string $role= "citoyen";
 
    
     #[ORM\Column(length: 255)]
@@ -51,7 +53,10 @@ class Utilisateur implements UserInterface
 
   
     #[ORM\Column(length: 255)]
-    private ?int $idMuni=null;
+    private ?int $idMuni=0;
+
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
 
     public function getCin(): ?int
     {
@@ -186,6 +191,11 @@ class Utilisateur implements UserInterface
     {
         return $this->pwd;
     }
+    public function setPassword(string $password)
+    {
+        // Hacher le mot de passe avant de le stocker dans la propriété
+        $this->pwd = password_hash($password, PASSWORD_DEFAULT);
+    }
 
     public function getSalt(): ?string
     {
@@ -199,6 +209,18 @@ class Utilisateur implements UserInterface
         // Cette méthode est utilisée pour effacer les informations sensibles de l'utilisateur
         // Par exemple, les mots de passe en texte brut. Comme nous n'utilisons pas de texte brut,
         // cette méthode peut rester vide.
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
     }
 
 
