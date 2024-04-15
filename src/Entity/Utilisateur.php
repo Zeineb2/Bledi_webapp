@@ -6,10 +6,11 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
 
-class Utilisateur
+class Utilisateur implements UserInterface
 {
     
     #[ORM\Id]
@@ -163,6 +164,41 @@ class Utilisateur
         $this->idMuni = $idMuni;
 
         return $this;
+    }
+
+   public function getUserIdentifier(): ?string
+    {
+        return $this->email; // Ou le champ que vous souhaitez utiliser comme identifiant utilisateur
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->email; // Ou le champ que vous souhaitez utiliser comme nom d'utilisateur
+    }
+
+    public function getRoles(): array
+    {
+        // Vous pouvez retourner un tableau contenant le rôle de l'utilisateur ici
+        return [$this->role];
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->pwd;
+    }
+
+    public function getSalt(): ?string
+    {
+        // Cette méthode est nécessaire pour utiliser l'encodage de mot de passe salé
+        // Vous pouvez laisser cette méthode vide si vous n'utilisez pas l'encodage de mot de passe salé
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        // Cette méthode est utilisée pour effacer les informations sensibles de l'utilisateur
+        // Par exemple, les mots de passe en texte brut. Comme nous n'utilisons pas de texte brut,
+        // cette méthode peut rester vide.
     }
 
 
