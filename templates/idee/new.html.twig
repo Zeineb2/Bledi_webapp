@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_front.html.twig' %}
 
 {% block title %}New Idee{% endblock %}
 
@@ -12,10 +12,9 @@
                     <div class="card-body">
                         {{ include('idee/_form.html.twig') }}
 
-                        <!-- File input element label -->
+                        <!-- File input element -->
                         <div class="form-group">
-                            <label for="image" class="file-input-label">Choose Image</label>
-                            <input type="file" class="form-control-file visually-hidden" id="image" name="image">
+                            <input type="file" class="form-control-file" id="image" name="image">
                         </div>
                     </div>
                 </div>
