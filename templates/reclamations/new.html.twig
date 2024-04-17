@@ -1,0 +1,20 @@
+{% include 'base.html.twig' %}
+
+
+{% block body %}
+{% for message in app.flashes('notification') %}
+        <div class="alert alert-info alert-dismissible fade show">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+    {% endfor %}
+    <center><h5>Add Reclamation</h5></center>
+<div style="width:50%; margin-left:auto; margin-right:auto;">
+     {{ include('reclamations/_form.html.twig', {'button_label': 'ADD'}) }}
+     {# <a href="{{ path('app_evenement') }}" class="btn btn-primary px-3 py-1">Retour</a> #}
+</div>
+    {# <td>
+    <a href="{{ path('app_evenement') }}" class="btn btn-primary px-3 py-1">Retour</a>
+</td> #}
+    
+{% endblock %}

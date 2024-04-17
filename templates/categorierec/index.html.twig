@@ -1,0 +1,53 @@
+{% include 'base.html.twig' %}
+
+{# {% block title %}Evenement index{% endblock %} #}
+
+{% block body %}
+    {# <h4>Categorie index</h4> #}
+<div style="width:50%; margin-left:auto; margin-right:auto;">
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Priority</th>
+                
+                <th style="padding-left:60px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categ in categs %}
+            <tr>
+                <td>{{ categ.categorieId }}</td>
+                <td>{{ categ.name }}</td>
+                <td>{{ categ.priority }}</td>
+             
+                <td>
+                <table>
+                <tbody>
+                 <td>
+                   <a href="{{ path('edit_Categorierec', {'id': categ.categorieId}) }}"  class="btn btn-primary px-3 py-1">Modifier</a>
+                   </td>
+                   <td>
+                    <a href="{{ path('delete_Categorierec', {'id': categ.categorieId}) }}"  class="btn btn-primary px-3 py-1">Supprimer </a>
+                 </td> 
+                  
+                 </tbody>
+                 </table>
+                 </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# <a href="{{ path('add_evenement') }}" class="btn btn-primary px-3 py-1">Nouvel Evenement</a> #}
+    </div>
+
+    
+{% endblock %}
+{% block footer  %}
+{% endblock %}
+

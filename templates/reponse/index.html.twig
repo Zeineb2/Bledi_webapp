@@ -1,0 +1,58 @@
+{% include 'base.html.twig' %}
+
+{# {% block title %}Evenement index{% endblock %} #}
+
+{% block body %}
+    {# <h4>Categorie index</h4> #}
+<div style="width:50%; margin-left:auto; margin-right:auto;">
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date</th>
+                <th>Message</th>
+                <th>Reclamation</th>
+                
+                <th style="padding-left:60px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rep in reponses %}
+            <tr>
+                <td>{{ rep.id }}</td>
+                <td>{{ rep.dateReponse ? rep.dateReponse|date('Y-m-d') : ''}} </td> 
+                <td>{{ rep.message }}</td>
+                <td>{{ rep.idReclamation}}</td>
+
+                  
+             
+                <td>
+                <table>
+                <tbody>
+                  <td>
+                   <a href="{{ path('edit_Reponse', {'id': rep.id}) }}"  class="btn btn-primary px-3 py-1">Modifier</a>
+                   </td>
+                   <td>
+                    <a href="{{ path('delete_Reponse', {'id': rep.id}) }}"  class="btn btn-primary px-3 py-1">Supprimer </a>
+                 </td>  
+                 
+                  
+                 </tbody>
+                 </table>
+                 </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {# <a href="{{ path('add_evenement') }}" class="btn btn-primary px-3 py-1">Nouvel Evenement</a> #}
+    </div>
+
+    
+{% endblock %}
+{% block footer  %}
+{% endblock %}
+
