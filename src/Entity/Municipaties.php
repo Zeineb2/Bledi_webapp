@@ -26,9 +26,9 @@ class Municipaties
     private ?string $etatMuni = null;
 
     #[ORM\Column]
-    private ?float $ratingMuni = null;
+    private ?float $ratingMuni = 0.0;
 
-    #[ORM\OneToMany(mappedBy: 'IDMuni', targetEntity: Ressources::class)]
+    #[ORM\OneToMany(mappedBy: 'IDMuni', targetEntity: Ressources::class )]
     private Collection $ressources;
 
     public function __construct()
