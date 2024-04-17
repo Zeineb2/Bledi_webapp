@@ -21,7 +21,7 @@ class Municipaties
     #[Assert\NotBlank(message: "Municipality name cannot be blank")]
     #[Assert\Regex(
         pattern: "/^[a-zA-Z\s]+$/",
-        message: "Invalid address format. Only letters and spaces are allowed."
+        message: "Invalid name format. Only letters and spaces are allowed."
     )]
     private ?string $nomMuni = null;
 

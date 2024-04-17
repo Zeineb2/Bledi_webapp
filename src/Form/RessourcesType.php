@@ -12,11 +12,10 @@ class RessourcesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('IDMuni')
             ->add('nomRessource')
             ->add('nbrRessource')
-            ->add('nbrDispoRessource')
             ->add('imgRessource')
-            ->add('IDMuni')
         ;
     }
 
