@@ -1,4 +1,4 @@
-{# templates/municipaties/new.html.twig #}
+
 {% extends 'base.html.twig' %}
 
 {% block title %}New Municipaties{% endblock %}
@@ -6,42 +6,28 @@
 {% block body %}
     <h1>Create new Municipaties</h1>
 
-    {{ form_start(form) }}
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
 
     <div class="mb-3">
-        {{ form_label(form.nomMuni, 'Municipality Name') }}
-        {{ form_widget(form.nomMuni, {
-            'attr': {
-                'class': 'form-control',
-                'pattern': '[^0-9]*'  
-            }
-        }) }}
-        {{ form_errors(form.nomMuni) }}
-    </div>
+    {{ form_label(form.nomMuni, 'Municipality Name') }}
+    {{ form_widget(form.nomMuni)}}
+    {{ form_errors(form.nomMuni) }} 
+</div>
 
-    <div class="mb-3">
-        {{ form_label(form.adresseMuni, 'Address') }}
-        {{ form_widget(form.adresseMuni, {
-            'attr': {
-                'class': 'form-control',
-                'placeholder': 'XXrueYY'
-            }
-        }) }}
-        {{ form_errors(form.adresseMuni) }}
-    </div>
+<div class="mb-3">
+    {{ form_label(form.adresseMuni, 'Address') }}
+    {{ form_widget(form.adresseMuni) }}
+    {{ form_errors(form.adresseMuni) }} 
 
-    <div class="mb-3">
-        {{ form_label(form.etatMuni, 'State') }}
-        {{ form_widget(form.etatMuni, {
-            'attr': {
-                'class': 'form-control'
-            }
-        }) }}
-        {{ form_errors(form.etatMuni) }}
-    </div>
+<div class="mb-3">
+    {{ form_label(form.etatMuni, 'State') }}
+    {{ form_widget(form.etatMuni)}}
+    {{ form_errors(form.etatMuni)}} 
+
 
     <button type="submit" class="btn btn-primary">Save</button>
     {{ form_end(form) }}
 
     <a href="{{ path('app_municipaties_index') }}">Back to list</a>
+    <script src="{{ asset('js/validmuni.js') }}"></script>
 {% endblock %}

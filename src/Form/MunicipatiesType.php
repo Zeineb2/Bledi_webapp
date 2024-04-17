@@ -13,18 +13,8 @@ class MunicipatiesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomMuni', null, [
-                'attr' => ['class' => 'form-control'],
-                'label' => 'Nom',
-                'required' => true,
-                'error_bubbling' => true, // Bubble up errors to parent form
-            ])
-            ->add('adresseMuni', null, [
-                'attr' => ['class' => 'form-control'],
-                'label' => 'Adresse',
-                'required' => true,
-                'error_bubbling' => true,
-            ])
+            ->add('nomMuni')
+            ->add('adresseMuni')
             ->add('etatMuni', ChoiceType::class, [
                 'choices' => [
                     'Ariana' => 'Ariana',
@@ -52,11 +42,6 @@ class MunicipatiesType extends AbstractType
                     'Tunis' => 'Tunis',
                     'Zaghouan' => 'Zaghouan',
                 ],
-                'placeholder' => 'Choose a state',
-                'attr' => ['class' => 'form-control'],
-                'label' => 'État',
-                'required' => true,
-                'error_bubbling' => true,
             ]);
     }
 

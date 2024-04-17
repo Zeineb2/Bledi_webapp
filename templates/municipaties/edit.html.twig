@@ -1,49 +1,33 @@
-{# templates/municipaties/edit.html.twig #}
+
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Municipaties{% endblock %}
+{% block title %}New Municipaties{% endblock %}
 
 {% block body %}
-    <h1>Edit Municipaties</h1>
+    <h1>Create new Municipaties</h1>
 
-    {{ form_start(form) }}
-
-    <div class="mb-3">
-        {{ form_label(form.nomMuni, 'Municipality Name') }}
-        {{ form_widget(form.nomMuni, {
-            'attr': {
-                'class': 'form-control',
-                'pattern': '[^0-9]*'  // Prevent input of numbers
-            }
-        }) }}
-        {{ form_errors(form.nomMuni) }}
-    </div>
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
 
     <div class="mb-3">
-        {{ form_label(form.adresseMuni, 'Address') }}
-        {{ form_widget(form.adresseMuni, {
-            'attr': {
-                'class': 'form-control',
-                'placeholder': 'XXrueYY'
-            }
-        }) }}
-        {{ form_errors(form.adresseMuni) }}
-    </div>
+    {{ form_label(form.nomMuni, 'Municipality Name') }}
+    {{ form_widget(form.nomMuni)}}
+    {{ form_errors(form.nomMuni) }} 
+</div>
 
-    <div class="mb-3">
-        {{ form_label(form.etatMuni, 'State') }}
-        {{ form_widget(form.etatMuni, {
-            'attr': {
-                'class': 'form-control'
-            }
-        }) }}
-        {{ form_errors(form.etatMuni) }}
-    </div>
+<div class="mb-3">
+    {{ form_label(form.adresseMuni, 'Address') }}
+    {{ form_widget(form.adresseMuni) }}
+    {{ form_errors(form.adresseMuni) }} 
 
-    <button type="submit" class="btn btn-primary">Update</button>
+<div class="mb-3">
+    {{ form_label(form.etatMuni, 'State') }}
+    {{ form_widget(form.etatMuni)}}
+    {{ form_errors(form.etatMuni)}} 
+
+
+    <button type="submit" class="btn btn-primary">Save</button>
     {{ form_end(form) }}
 
     <a href="{{ path('app_municipaties_index') }}">Back to list</a>
-
-    {# Include delete form here if needed #}
+    <script src="{{ asset('js/validmuni.js') }}"></script>
 {% endblock %}

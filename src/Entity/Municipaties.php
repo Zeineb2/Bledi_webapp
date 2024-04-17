@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MunicipatiesRepository::class)]
 class Municipaties
@@ -17,12 +18,19 @@ class Municipaties
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Municipality name cannot be blank")]
+    #[Assert\Regex(
+        pattern: "/^[a-zA-Z\s]+$/",
+        message: "Invalid address format. Only letters and spaces are allowed."
+    )]
     private ?string $nomMuni = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Address cannot be blank")]
     private ?string $adresseMuni = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "State cannot be blank")]
     private ?string $etatMuni = null;
 
     #[ORM\Column]
