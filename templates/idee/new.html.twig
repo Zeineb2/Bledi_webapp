@@ -3,9 +3,25 @@
 {% block title %}New Idee{% endblock %}
 
 {% block body %}
-    <h1>Create new Idee</h1>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Create new Idee</div>
 
-    {{ include('idee/_form.html.twig') }}
+                    <div class="card-body">
+                        {{ include('idee/_form.html.twig') }}
 
-    <a href="{{ path('app_idee_index') }}">back to list</a>
+                        <!-- File input element label -->
+                        <div class="form-group">
+                            <label for="image" class="file-input-label">Choose Image</label>
+                            <input type="file" class="form-control-file visually-hidden" id="image" name="image">
+                        </div>
+                    </div>
+                </div>
+
+                <a href="{{ path('app_idee_index') }}" class="btn btn-secondary mt-3">Back to List</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

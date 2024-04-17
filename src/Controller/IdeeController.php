@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Idee;
-use App\Entity\IdeeRepository;
+use App\Repository\IdeeRepository;
 use App\Form\IdeeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
