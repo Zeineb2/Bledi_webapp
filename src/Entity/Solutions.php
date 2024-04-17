@@ -103,12 +103,12 @@ class Solutions
         return $this;
     }
 
-    public function getIdRec(): ?Reclamations
+    public function getIdRec(): ?int
     {
         return $this->idRec;
     }
 
-    public function setIdRec(?Reclamations $idRec)
+    public function setIdRec(?int $idRec)
     {
         $this->idRec = $idRec;
 
