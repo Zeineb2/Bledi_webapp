@@ -36,7 +36,7 @@ class PhpBadWordsController extends AbstractController
 
     /**
      * Set the bad words list from an array
-     *
+     *          
      * @param  array
      * @return this
      * @throws \Exception
