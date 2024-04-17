@@ -21,7 +21,14 @@ class MunicipatiesController extends AbstractController
             'municipaties' => $municipatiesRepository->findAll(),
         ]);
     }
-
+    #[Route('/front', name: 'app_municipaties_front_index')]
+    public function frontIndex(MunicipatiesRepository $municipatiesRepository): Response
+    {
+        return $this->render('municipaties/front.html.twig', [
+            'municipaties' => $municipatiesRepository->findAll(),
+        ]);
+    }
+    
     #[Route('/new', name: 'app_municipaties_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
