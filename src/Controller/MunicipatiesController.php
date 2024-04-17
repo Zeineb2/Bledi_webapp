@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Municipaties;
-use App\Form\Municipaties1Type;
+use App\Form\MunicipatiesType;
 use App\Repository\MunicipatiesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ class MunicipatiesController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $municipaty = new Municipaties();
-        $form = $this->createForm(Municipaties1Type::class, $municipaty);
+        $form = $this->createForm(MunicipatiesType::class, $municipaty);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ class MunicipatiesController extends AbstractController
     #[Route('/{id}/edit', name: 'app_municipaties_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Municipaties $municipaty, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Municipaties1Type::class, $municipaty);
+        $form = $this->createForm(MunicipatiesType::class, $municipaty);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

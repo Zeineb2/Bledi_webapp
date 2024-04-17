@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class Ressources1Type extends AbstractType
+class RessourcesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -16,7 +16,7 @@ class Ressources1Type extends AbstractType
             ->add('nbrRessource')
             ->add('nbrDispoRessource')
             ->add('imgRessource')
-            ->add('id_muni')
+            ->add('IDMuni')
         ;
     }
 

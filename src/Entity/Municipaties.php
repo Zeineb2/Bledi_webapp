@@ -13,7 +13,7 @@ class Municipaties
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(name: "ID_muni")]
+    #[ORM\Column]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -28,7 +28,7 @@ class Municipaties
     #[ORM\Column]
     private ?float $ratingMuni = null;
 
-    #[ORM\OneToMany(mappedBy: 'id_muni', targetEntity: Ressources::class)]
+    #[ORM\OneToMany(mappedBy: 'IDMuni', targetEntity: Ressources::class)]
     private Collection $ressources;
 
     public function __construct()
@@ -36,10 +36,9 @@ class Municipaties
         $this->ressources = new ArrayCollection();
     }
 
-
     public function getId(): ?int
     {
-        return $this->id_muni;
+        return $this->id;
     }
 
     public function getNomMuni(): ?string
@@ -90,6 +89,14 @@ class Municipaties
         return $this;
     }
 
+        /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->nomMuni; // Adjust this according to how you want to represent the entity as a string
+    }
+
     /**
      * @return Collection<int, Ressources>
      */
@@ -102,7 +109,7 @@ class Municipaties
     {
         if (!$this->ressources->contains($ressource)) {
             $this->ressources->add($ressource);
-            $ressource->setIdMuni($this);
+            $ressource->setIDMuni($this);
         }
 
         return $this;
@@ -112,8 +119,8 @@ class Municipaties
     {
         if ($this->ressources->removeElement($ressource)) {
             // set the owning side to null (unless already changed)
-            if ($ressource->getIdMuni() === $this) {
-                $ressource->setIdMuni(null);
+            if ($ressource->getIDMuni() === $this) {
+                $ressource->setIDMuni(null);
             }
         }
 

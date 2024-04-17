@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ressources;
-use App\Form\Ressources1Type;
+use App\Form\RessourcesType;
 use App\Repository\RessourcesRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +26,7 @@ class RessourcesController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $ressource = new Ressources();
-        $form = $this->createForm(Ressources1Type::class, $ressource);
+        $form = $this->createForm(RessourcesType::class, $ressource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,7 +53,7 @@ class RessourcesController extends AbstractController
     #[Route('/{idRessource}/edit', name: 'app_ressources_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Ressources $ressource, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Ressources1Type::class, $ressource);
+        $form = $this->createForm(RessourcesType::class, $ressource);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
