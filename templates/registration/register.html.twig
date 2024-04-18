@@ -11,6 +11,11 @@
 
     {{ form_start(registrationForm) }}
         {{ form_errors(registrationForm) }}
+        <div class="form-group">
+            {{ form_label(registrationForm.cin) }}
+            {{ form_widget(registrationForm.cin) }}
+            {{ form_errors(registrationForm.cin) }}
+        </div>
 
         <div class="form-group">
             {{ form_label(registrationForm.email) }}
