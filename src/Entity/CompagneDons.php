@@ -2,100 +2,81 @@
 
 namespace App\Entity;
 
+use App\Repository\CompagneDonsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * CompagneDons
- *
- * @ORM\Table(name="compagne_dons", indexes={@ORM\Index(name="ID_muni", columns={"ID_muni"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: CompagneDonsRepository::class)]
 class CompagneDons
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id_com", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idCom;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="date_d", type="string", length=250, nullable=false)
-     */
-    private $dateD;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    public ?\DateTimeInterface $date_d = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="date_f", type="string", length=250, nullable=false)
-     */
-    private $dateF;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    public ?\DateTimeInterface $date_f = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montant_e", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $montantE;
+    #[ORM\Column]
+    public ?float $montant_e = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="descrip", type="string", length=255, nullable=false)
-     */
-    private $descrip;
+    #[ORM\Column(length: 255)]
+    private ?string $descrip = null;
 
-    /**
-     * @var \Municipaties
-     *
-     * @ORM\ManyToOne(targetEntity="Municipaties")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_muni", referencedColumnName="ID_muni")
-     * })
-     */
-    private $idMuni;
+    #[ORM\OneToMany(targetEntity: Dons::class, mappedBy: 'compagne', orphanRemoval: true)]
+    private Collection $dons;
 
-    public function getIdCom(): ?int
+    #[ORM\ManyToOne(inversedBy: 'compagneDons')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Municipaties $muni = null;
+
+    public function __construct()
     {
-        return $this->idCom;
+        $this->dons = new ArrayCollection();
     }
 
-    public function getDateD(): ?string
+    public function getId(): ?int
     {
-        return $this->dateD;
+        return $this->id;
     }
 
-    public function setDateD(string $dateD)
+    public function getDateD(): ?\DateTimeInterface
     {
-        $this->dateD = $dateD;
+        return $this->date_d;
+    }
+
+    public function setDateD(\DateTimeInterface $date_d): static
+    {
+        $this->date_d = $date_d;
 
         return $this;
     }
 
-    public function getDateF(): ?string
+    public function getDateF(): ?\DateTimeInterface
     {
-        return $this->dateF;
+        return $this->date_f;
     }
 
-    public function setDateF(string $dateF)
+    public function setDateF(\DateTimeInterface $date_f): static
     {
-        $this->dateF = $dateF;
+        $this->date_f = $date_f;
 
         return $this;
     }
 
     public function getMontantE(): ?float
     {
-        return $this->montantE;
+        return $this->montant_e;
     }
 
-    public function setMontantE(float $montantE)
+    public function setMontantE(float $montant_e): static
     {
-        $this->montantE = $montantE;
+        $this->montant_e = $montant_e;
 
         return $this;
     }
@@ -105,24 +86,52 @@ class CompagneDons
         return $this->descrip;
     }
 
-    public function setDescrip(string $descrip)
+    public function setDescrip(string $descrip): static
     {
         $this->descrip = $descrip;
 
         return $this;
     }
 
-    public function getIdMuni(): ?Municipaties
+    /**
+     * @return Collection<int, Dons>
+     */
+    public function getDons(): Collection
     {
-        return $this->idMuni;
+        return $this->dons;
     }
 
-    public function setIdMuni(?Municipaties $idMuni)
+    public function addDon(Dons $don): static
     {
-        $this->idMuni = $idMuni;
+        if (!$this->dons->contains($don)) {
+            $this->dons->add($don);
+            $don->setCompagne($this);
+        }
 
         return $this;
     }
 
+    public function removeDon(Dons $don): static
+    {
+        if ($this->dons->removeElement($don)) {
+            // set the owning side to null (unless already changed)
+            if ($don->getCompagne() === $this) {
+                $don->setCompagne(null);
+            }
+        }
 
+        return $this;
+    }
+
+    public function getMuni(): ?Municipaties
+    {
+        return $this->muni;
+    }
+
+    public function setMuni(?Municipaties $muni): static
+    {
+        $this->muni = $muni;
+
+        return $this;
+    }
 }

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CompagneDons{% endblock %}
+
+{% block body %}
+    <h1>Edit CompagneDons</h1>
+
+    {{ include('compagne_dons/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_compagne_dons_index') }}">back to list</a>
+
+    {{ include('compagne_dons/_delete_form.html.twig') }}
+{% endblock %}

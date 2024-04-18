@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CompagneDons{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>CompagneDons</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ compagne_don.id }}</td>
+            </tr>
+            <tr>
+                <th>Date_d</th>
+                <td>{{ compagne_don.dateD ? compagne_don.dateD|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_f</th>
+                <td>{{ compagne_don.dateF ? compagne_don.dateF|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Montant_e</th>
+                <td>{{ compagne_don.montantE }}</td>
+            </tr>
+            <tr>
+                <th>Descrip</th>
+                <td>{{ compagne_don.descrip }}</td>
+            </tr>
+        </tbody>
+    </table>
+     
+     <h1>Dons </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nom de Compagne Dons</th>
+                <th>Montant_don</th>
+                <th>Mail_don</th>
+                <th>CIN_don</th>
+                <th>Virement_img</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for don in compagne_don.getDons() %}
+            <tr>
+                <td>{{ don.compagne.descrip }}</td>
+                <td>{{ don.montantDon }}</td>
+                <td>{{ don.mailDon }}</td>
+                <td>{{ don.CINDon }}</td>
+                <td>{{ don.virementImg }}</td>
+                <td>
+                    <a href="{{ path('app_dons_show', {'id': don.id}) }}" class="btn btn-info">show</a>
+                    <a href="{{ path('app_dons_edit', {'id': don.id}) }}" class="btn btn-primary">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_compagne_dons_index') }}" class="btn btn-secondary">back to list</a>
+
+    <a href="{{ path('app_compagne_dons_edit', {'id': compagne_don.id}) }}" class="btn btn-warning">edit</a>
+
+    {{ include('compagne_dons/_delete_form.html.twig') }}
+{% endblock %}

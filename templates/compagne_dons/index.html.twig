@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bledi compagne dons{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Data table</h4>
+            <div class="row mb-3">
+                <div class="col-sm-12 col-md-6 text-right">
+                    <div id="order-listing_filter" class="dataTables_filter">
+                        <label>
+                            <input type="search" class="form-control" placeholder="Search" aria-controls="order-listing">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <a href="{{ path('app_compagne_dons_new') }}" class="btn btn-primary">Create New</a>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h4 class="card-title">Bordered table</h4>
+                <p class="card-description"> Add class <code>.table-bordered</code>
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Montant Collecté</th>
+                                <th>Montant Estimé</th>
+                                <th>Municipalité</th>
+                                <th>Date Début</th>
+                                <th>Date Fin</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for compagne in compagne_dons %}
+                                <tr>
+                                    <td>{{ compagne[0].getDescrip() }}</td>
+                                  
+                                    <td>
+                                        <div class="progress">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ (compagne['totalAmount'] / compagne[0].getMontantE()) * 100 }}%;" aria-valuenow="{{ compagne['totalAmount'] }}" aria-valuemin="0" aria-valuemax="{{ compagne[0].getMontantE() }}"></div>
+                                        </div>
+                                    </td>
+                                    <td>{{ compagne[0].getMontantE() }}</td>
+                                    <td>{{ compagne[0].getMuni().getNomMuni() }}</td>
+                                    <td>{{ compagne[0].getDateD() ? compagne[0].getDateD()|date('Y-m-d') : '' }}</td>
+                                    <td>{{ compagne[0].getDateF() ? compagne[0].getDateF()|date('Y-m-d') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('app_compagne_dons_show', {'id': compagne[0].getId()}) }}">show</a>
+                                        <a href="{{ path('app_compagne_dons_edit', {'id': compagne[0].getId()}) }}">edit</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="6">No records found</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

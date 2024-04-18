@@ -1,0 +1,68 @@
+/* Style pour la table principale */
+.table-primary {
+    margin-top: 20px;
+}
+
+/* Style pour les titres */
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Style pour les boutons */
+.btn {
+    margin-right: 10px;
+}
+
+/* Style pour la table des dons */
+.table-dons {
+    margin-top: 20px;
+}
+
+/* Style pour les cellules de la table des dons */
+.table-dons th,
+.table-dons td {
+    padding: 10px;
+}
+
+/* Style pour les actions des dons */
+.actions {
+    white-space: nowrap;
+}
+
+/* Style pour les liens */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Ajoutez ces styles dans votre fichier CSS */
+
+
+
+.card {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.card-title {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    margin-bottom: 10px;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.btn {
+    margin-right: 10px;
+}

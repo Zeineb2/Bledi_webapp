@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dons index{% endblock %}
+
+{% block body %}
+    <h1>Dons </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nom de Compagne Dons</th>
+                <th>Montant_don</th>
+                <th>Mail_don</th>
+                <th>CIN_don</th>
+                <th>Virement_img</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for don in dons %}
+            <tr>
+                <td>{{ don.compagne.descrip }}</td>
+                <td>{{ don.montantDon }}</td>
+                <td>{{ don.mailDon }}</td>
+                <td>{{ don.CINDon }}</td>
+                <td>{{ don.virementImg }}</td>
+                <td>
+                    <a href="{{ path('app_dons_show', {'id': don.id}) }}">show</a>
+                    <a href="{{ path('app_dons_edit', {'id': don.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dons_new') }}">Create new</a>
+{% endblock %}

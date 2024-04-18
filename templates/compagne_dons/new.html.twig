@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New CompagneDons{% endblock %}
+
+{% block stylesheets %}
+    {# Include your CSS file here #}
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>Create new CompagneDons</h1>
+
+    {# Afficher les messages flash s'il y en a #}
+    {% for flash_message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    <form method="post" class="compagne-dons-form">
+        {{ form_start(form, {'attr': {'class': 'forms-sample'}}) }}
+
+        <div class="form-group">
+            {{ form_row(form.date_d, {'attr': {'class': 'form-control'}}) }}
+        </div>
+       
+        <div class="form-group">
+            {{ form_row(form.date_f, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.montant_e, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_row(form.descrip, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_row(form.muni, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        {{ form_end(form) }}
+
+        <a href="{{ path('app_compagne_dons_index') }}">Back to list</a>
+    </form>
+{% endblock %}

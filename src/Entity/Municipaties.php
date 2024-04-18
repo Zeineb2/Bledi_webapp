@@ -13,112 +13,93 @@ class Municipaties
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $idMuni = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nomMuni = null;
+    private ?string $nom_muni = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $adresseMuni = null;
+    private ?string $adresse_muni = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $etatMuni = null;
+    private ?string $etat_muni = null;
 
-    #[ORM\Column]
-    private ?float $ratingMuni = null;
+    #[ORM\OneToMany(targetEntity: CompagneDons::class, mappedBy: 'muni', orphanRemoval: true)]
+    private Collection $compagneDons;
 
-
-#[ORM\OneToMany(targetEntity: Ressources::class, mappedBy: 'idMuni')]
-private $ressources;
-
-public function __construct()
-{
-    $this->ressources = new ArrayCollection();
-}
-
-
-    public function getIdMuni(): ?int
+    public function __construct()
     {
-        return $this->idMuni;
+        $this->compagneDons = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getNomMuni(): ?string
     {
-        return $this->nomMuni;
+        return $this->nom_muni;
     }
 
-    public function setNomMuni(string $nomMuni)
+    public function setNomMuni(string $nom_muni): static
     {
-        $this->nomMuni = $nomMuni;
+        $this->nom_muni = $nom_muni;
 
         return $this;
     }
 
     public function getAdresseMuni(): ?string
     {
-        return $this->adresseMuni;
+        return $this->adresse_muni;
     }
 
-    public function setAdresseMuni(string $adresseMuni)
+    public function setAdresseMuni(string $adresse_muni): static
     {
-        $this->adresseMuni = $adresseMuni;
+        $this->adresse_muni = $adresse_muni;
 
         return $this;
     }
 
     public function getEtatMuni(): ?string
     {
-        return $this->etatMuni;
+        return $this->etat_muni;
     }
 
-    public function setEtatMuni(string $etatMuni)
+    public function setEtatMuni(string $etat_muni): static
     {
-        $this->etatMuni = $etatMuni;
-
-        return $this;
-    }
-
-    public function getRatingMuni(): ?float
-    {
-        return $this->ratingMuni;
-    }
-
-    public function setRatingMuni(float $ratingMuni)
-    {
-        $this->ratingMuni = $ratingMuni;
+        $this->etat_muni = $etat_muni;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Ressources>
+     * @return Collection<int, CompagneDons>
      */
-    public function getRessources(): Collection
+    public function getCompagneDons(): Collection
     {
-        return $this->ressources;
+        return $this->compagneDons;
     }
 
-    public function addRessource(Ressources $ressource): static
+    public function addCompagneDon(CompagneDons $compagneDon): static
     {
-        if (!$this->ressources->contains($ressource)) {
-            $this->ressources->add($ressource);
-            $ressource->setIdMuni($this);
+        if (!$this->compagneDons->contains($compagneDon)) {
+            $this->compagneDons->add($compagneDon);
+            $compagneDon->setMuni($this);
         }
 
         return $this;
     }
 
-    public function removeRessource(Ressources $ressource): static
+    public function removeCompagneDon(CompagneDons $compagneDon): static
     {
-        if ($this->ressources->removeElement($ressource)) {
+        if ($this->compagneDons->removeElement($compagneDon)) {
             // set the owning side to null (unless already changed)
-            if ($ressource->getIdMuni() === $this) {
-                $ressource->setIdMuni(null);
+            if ($compagneDon->getMuni() === $this) {
+                $compagneDon->setMuni(null);
             }
         }
 
         return $this;
     }
-
-
 }

@@ -2,128 +2,102 @@
 
 namespace App\Entity;
 
+use App\Repository\DonsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * Dons
- *
- * @ORM\Table(name="dons", indexes={@ORM\Index(name="id_com", columns={"id_com"})})
- * @ORM\Entity
- */
+#[ORM\Entity(repositoryClass: DonsRepository::class)]
 class Dons
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="ID_don", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $idDon;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="montant_don", type="float", precision=10, scale=0, nullable=false)
-     */
-    private $montantDon;
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "Le montant du don ne peut pas être vide.")]
+    #[Assert\GreaterThan(value: 0, message: "Le montant du don doit être supérieur à zéro.")]
+    private ?float $montant_don = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail_don", type="string", length=255, nullable=false)
-     */
-    private $mailDon;
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'adresse email ne peut pas être vide.")]
+    #[Assert\Email(message: "L'adresse email '{{ value }}' n'est pas valide.")]
+    private ?string $mail_don = null;
 
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="CIN_don", type="integer", nullable=false)
-     */
-    private $cinDon;
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "Le CIN ne peut pas être vide.")]
+    #[Assert\Length(
+        min: 8,
+        max: 8,
+        exactMessage: "Le CIN doit être composé de 8 chiffres."
+    )]
+    private ?int $CIN_don = null;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="virement_img", type="text", length=65535, nullable=false)
-     */
-    private $virementImg;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $virement_img = null;
 
-    /**
-     * @var \CompagneDons
-     *
-     * @ORM\ManyToOne(targetEntity="CompagneDons")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="id_com", referencedColumnName="id_com")
-     * })
-     */
-    private $idCom;
+    #[ORM\ManyToOne(inversedBy: 'dons')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?CompagneDons $compagne = null;
 
-    public function getIdDon(): ?int
+    public function getId(): ?int
     {
-        return $this->idDon;
+        return $this->id;
     }
 
     public function getMontantDon(): ?float
     {
-        return $this->montantDon;
+        return $this->montant_don;
     }
 
-    public function setMontantDon(float $montantDon)
+    public function setMontantDon(float $montant_don): self
     {
-        $this->montantDon = $montantDon;
-
+        $this->montant_don = $montant_don;
         return $this;
     }
 
     public function getMailDon(): ?string
     {
-        return $this->mailDon;
+        return $this->mail_don;
     }
 
-    public function setMailDon(string $mailDon)
+    public function setMailDon(string $mail_don): self
     {
-        $this->mailDon = $mailDon;
-
+        $this->mail_don = $mail_don;
         return $this;
     }
 
-    public function getCinDon(): ?int
+    public function getCINDon(): ?int
     {
-        return $this->cinDon;
+        return $this->CIN_don;
     }
 
-    public function setCinDon(int $cinDon)
+    public function setCINDon(int $CIN_don): self
     {
-        $this->cinDon = $cinDon;
-
+        $this->CIN_don = $CIN_don;
         return $this;
     }
 
     public function getVirementImg(): ?string
     {
-        return $this->virementImg;
+        return $this->virement_img;
     }
 
-    public function setVirementImg(string $virementImg)
+    public function setVirementImg(string $virement_img): self
     {
-        $this->virementImg = $virementImg;
-
+        $this->virement_img = $virement_img;
         return $this;
     }
 
-    public function getIdCom(): ?CompagneDons
+    public function getCompagne(): ?CompagneDons
     {
-        return $this->idCom;
+        return $this->compagne;
     }
 
-    public function setIdCom(?CompagneDons $idCom)
+    public function setCompagne(?CompagneDons $compagne): self
     {
-        $this->idCom = $idCom;
-
+        $this->compagne = $compagne;
         return $this;
     }
-
-
 }
