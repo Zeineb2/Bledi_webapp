@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\SolutionsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 
@@ -19,18 +19,27 @@ class Solutions
     private ?int $idSol = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "Description cannot be blank")]
     private ?string $descriptionSol = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\NotBlank(message: "this field cannot be blank")]
     private ?\DateTimeInterface $datedSol = null;
 
     #[ORM\Column(type: 'date', nullable: true)]
+    #[Assert\NotBlank(message: "this field cannot be blank")]
     private ?\DateTimeInterface $datefSol = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank(message: "this field cannot be blank")]
     private ?string $etatSol = null;
 
     #[ORM\Column(type: 'float', nullable: true)]
+    #[Assert\NotBlank(message: "this field cannot be blank")]
+    #[Assert\Regex(
+        pattern: '/^\d+(\.\d+)?$/',
+        message: "Budget must be a valid float number"
+    )]
     private ?float $budgetSol = null;
 
   /*  #[ORM\ManyToOne(targetEntity: Reclamations::class)]
