@@ -3,10 +3,10 @@
 {% block title %}Idee{% endblock %}
 
 {% block body %}
-    <h1>Idee</h1>
-
-    <table class="table">
-        <tbody>
+    <div class="container">
+        <h1>Idee</h1>
+        <table class="table">
+            <tbody>
             <tr>
                 <th>IdIdee</th>
                 <td>{{ idee.idIdee }}</td>
@@ -23,12 +23,13 @@
                 <th>ImageIdee</th>
                 <td>{{ idee.imageIdee }}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_idee_index') }}">back to list</a>
-
-    <a href="{{ path('app_idee_edit', {'idIdee': idee.idIdee}) }}">edit</a>
-
-    {{ include('idee/_delete_form.html.twig') }}
+        <div class="btn-group ml-auto">
+            <a href="{{ path('app_idee_index') }}" class="btn btn-secondary"><span class="mdi mdi-arrow-left"></span></a>
+            <a href="{{ path('app_idee_edit', {'idIdee': idee.idIdee}) }}" class="btn btn-primary">Edit</a>
+            {{ include('idee/_delete_form.html.twig') }}
+        </div>
+    </div>
 {% endblock %}
