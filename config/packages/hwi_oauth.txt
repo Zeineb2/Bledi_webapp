@@ -1,8 +1,0 @@
-hwi_oauth:
-    resource_owners:
-        google:
-            type:                google
-            client_id:           "358256991642-rv81htsulpjbvs9c5iohpv50ovo687hk.apps.googleusercontent.com"
-            client_secret:       "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"
-            scope:               "email"
-            userinfo_endpoint:   "https://www.googleapis.com/oauth2/v2/userinfo"
