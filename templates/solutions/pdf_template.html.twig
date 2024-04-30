@@ -41,22 +41,27 @@
             color: #333;
             font-weight: bold;
         }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
         }
-        .btn:hover {
-            background-color: #0056b3;
+        .signature {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .logo img {
+            max-width: 200px;
+            max-height: 100px;
+        }
+        .signature img {
+            max-width: 150px;
+            max-height: 50px;
         }
     </style>
 </head>
 <body>
 <div class="container">
+
     <h1>Solution Information</h1>
     <table>
         <tr>
@@ -65,17 +70,18 @@
         </tr>
         <tr>
             <th>Date Start</th>
-            <td>{{ solution.datedSol ? solution.datedSol.format('Y-m-d') : '' }}</td>
+            <td>{{ solution.datedSol ? solution.datedSol|date('Y-m-d') : '' }}</td>
         </tr>
         <tr>
             <th>Date End</th>
-            <td>{{ solution.datefSol ? solution.datefSol.format('Y-m-d') : '' }}</td>
+            <td>{{ solution.datefSol ? solution.datefSol|date('Y-m-d') : '' }}</td>
         </tr>
         <tr>
             <th>Budget</th>
             <td>{{ solution.budgetSol }}</td>
         </tr>
     </table>
+
 </div>
 </body>
 </html>
