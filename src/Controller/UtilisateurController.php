@@ -27,10 +27,10 @@ class UtilisateurController extends AbstractController
     }
     private $twilioService;
 
-    public function __construct(TwilioService $twilioService)
-    {
-        $this->twilioService = $twilioService;
-    }
+  //  public function __construct(TwilioService $twilioService)
+   // {
+    //    $this->twilioService = $twilioService;
+   // }
 
     #[Route('/new', name: 'app_utilisateur_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -43,7 +43,7 @@ class UtilisateurController extends AbstractController
             $entityManager->persist($utilisateur);
             $entityManager->flush();
 
-            $this->twilioService->sendWelcomeMessage($utilisateur->getTel());
+            //$this->twilioService->sendWelcomeMessage($utilisateur->getTel());
             return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -89,24 +89,6 @@ class UtilisateurController extends AbstractController
         }
 
         return $this->redirectToRoute('app_utilisateur_index', [], Response::HTTP_SEE_OTHER);
-    }
-    private function sendSMS(string $number,string $name, string $text): void
-    {
-        $twilioAccountSid = $_ENV['twilio_account_sid'];
-        $twilioAuthToken = $_ENV['twilio_auth_token'];
-        $twilioPhoneNumber = $_ENV['twilio_phone_number'];
-
-        $twilioClient = new Client($twilioAccountSid, $twilioAuthToken);
-
-
-        $twilioClient->messages->create(
-            '+21655949459', //// badel enum  mtaaak
-            [
-                'from' => $twilioPhoneNumber,
-                'body' => 'Un utilisateur vient de s inscrire ' ,
-                    
-            ]
-        );
     }
 
     #[Route('/pdf/{cin}', name: 'app_utilisateur_pdf', methods: ['GET'])]

@@ -3,9 +3,79 @@
 {% block title %}New Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Create new Utilisateur</h1>
+    <div class="container">
+        <h1>Nouvel utilisateur</h1>
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="form-group">
+                    {{ form_label(form.nom, 'Nom') }}
+                    {{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.nom) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.cin, 'CIN') }}
+                    {{ form_widget(form.cin, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.cin) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.email, 'Email') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.tel, 'Téléphone') }}
+                    {{ form_widget(form.tel, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.tel) }}
+                </div>
+            
+                <div class="form-group">
+                    {{ form_label(form.adresse, 'Adresse') }}
+                    {{ form_widget(form.adresse, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.adresse) }}
+                </div>
+                <div class="form-check">
+                    {{ form_widget(form.isVerified, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(form.isVerified, 'isVerified', {'label_attr': {'class': 'form-check-label'}}) }}
+                    {{ form_errors(form.isVerified) }}
+                </div>
 
-    {{ include('utilisateur/_form.html.twig') }}
-
-    <a href="{{ path('app_utilisateur_index') }}">back to list</a>
+                </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_label(form.rate, 'Rate') }}
+                    {{ form_widget(form.rate, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.rate) }}
+                </div>
+                
+                <div class="form-group">
+                    {{ form_label(form.pwd, 'Mot de passe') }}
+                    {{ form_widget(form.pwd, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.pwd) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.posteAg, 'Poste Ag') }}
+                    {{ form_widget(form.posteAg, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.posteAg) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.idMuni, 'ID municipalité') }}
+                    {{ form_widget(form.idMuni, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.idMuni) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.role, 'Rôle') }}
+                    {{ form_widget(form.role, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.role) }}
+                </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                {{ form_end(form) }}
+                
+                <a href="{{ path('app_utilisateur_index') }}" class="btn btn-secondary">Retour à la liste</a>
+            
+        </div>
+    </div>
 {% endblock %}
+
+

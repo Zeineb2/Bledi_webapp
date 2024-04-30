@@ -3,51 +3,197 @@
 {% block title %}Admin/Agents{% endblock %}
 
 {% block body %}
-    <h1>Liste des utilisateurs</h1>
+<style>
+h2 {
+        text-align: center;
+    }
+</style>
+    <h2>Liste des utilisateurs</h2>
+    <div class="row mb-3">
+                <div class="col-sm-12 col-md-6">
+                    <div id="order-listing_filter" class="dataTables_filter">
+                        <input type="search" class="form-control" id="searchInput" placeholder="Recherche">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <a href="{{ path('app_utilisateur_new') }}" class="btn btn-primary">Create New +</a>
+                </div>
+            </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Cin</th>
-                <th>Nom</th>
-                <th>Email</th>
-                <th>Tel</th>
-                <th>Adresse</th>
-                <th>Rate</th>
-                <th>Pwd</th>
-                <th>Role</th>
-                <th>PosteAg</th>
-                <th>IdMuni</th>
-                <th>IsVerified</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for utilisateur in utilisateurs %}
-            <tr>
-                <td>{{ utilisateur.cin }}</td>
-                <td>{{ utilisateur.nom }}</td>
-                <td>{{ utilisateur.email }}</td>
-                <td>{{ utilisateur.tel }}</td>
-                <td>{{ utilisateur.adresse }}</td>
-                <td>{{ utilisateur.rate }}</td>
-                <td>{{ utilisateur.pwd }}</td>
-                <td>{{ utilisateur.role }}</td>
-                <td>{{ utilisateur.posteAg }}</td>
-                <td>{{ utilisateur.idMuni }}</td>
-                <td>{{ utilisateur.isVerified ? 'Yes' : 'No' }}</td>
-                <td>
-                    <a href="{{ path('app_utilisateur_show', {'cin': utilisateur.cin}) }}">show</a>
-                    <a href="{{ path('app_utilisateur_edit', {'cin': utilisateur.cin}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="12">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+    <div class="col-12">
+        <div class="table-responsive">
+            <table id="order-listing" class="table">
+                <thead>
+                    <tr>
+                        <th>Cin</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Tel</th>
+                        <th>Adresse</th>
+                        <th>Rate</th>
+                        <th>Pwd</th>
+                        <th>Role</th>
+                        <th>PosteAg</th>
+                        <th>IdMuni</th>
+                        <th>IsVerified</th>
+                        <th class="no-print">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for utilisateur in utilisateurs %}
+                        <tr class="user-row">
+                            <td>{{ utilisateur.cin }}</td>
+                            <td>{{ utilisateur.nom }}</td>
+                            <td>{{ utilisateur.email }}</td>
+                            <td>{{ utilisateur.tel }}</td>
+                            <td>{{ utilisateur.adresse }}</td>
+                            <td>{{ utilisateur.rate }}</td>
+                            <td>{{ utilisateur.pwd }}</td>
+                            <td>{{ utilisateur.role }}</td>
+                            <td>{{ utilisateur.posteAg }}</td>
+                            <td>{{ utilisateur.idMuni }}</td>
+                            <td>{{ utilisateur.isVerified ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <input type="radio" name="selectedUser" value="{{ utilisateur.cin }}">
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="12">No records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-    <a href="{{ path('app_utilisateur_new') }}">Create new</a>
+<div class="row">
+    <div class="col-12 text-center">
+        <a href="#" class="btn btn-primary" id="showBtn">Show</a>
+        <a href="#" class="btn btn-secondary" id="editBtn">Edit</a>
+        <a href="#" class="btn btn-primary" id="pdfBtn">PDF</a>
+        <button onclick="printTable()" class="btn btn-secondary">Imprimer</button>
+    </div>
+</div>
+
+
+
+<script>
+    document.getElementById('showBtn').addEventListener('click', function() {
+        var selectedCin = getSelectedCin();
+        if (selectedCin) {
+            window.location.href = '/utilisateur/' + selectedCin;
+        }
+    });
+
+    document.getElementById('editBtn').addEventListener('click', function() {
+        var selectedCin = getSelectedCin();
+        if (selectedCin) {
+            window.location.href = '/utilisateur/' + selectedCin + '/edit';
+        }
+    });
+
+    document.getElementById('pdfBtn').addEventListener('click', function() {
+        var selectedCin = getSelectedCin();
+        if (selectedCin) {
+            window.location.href = '/utilisateur/' + selectedCin + '/pdf';
+        }
+    });
+
+    
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('searchInput');
+        const rows = document.querySelectorAll('.user-row');
+
+        // Function to handle row double-click
+        function handleRowDoubleClick() {
+            const url = this.dataset.url;
+            window.location.href = url;
+        }
+
+        // Add event listener for double-click to each row
+        rows.forEach(row => {
+            row.addEventListener('dblclick', handleRowDoubleClick);
+        });
+
+        // Function to handle search input change
+        searchInput.addEventListener('input', function () {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            rows.forEach(row => {
+                let found = false;
+                row.querySelectorAll('td').forEach(cell => {
+                    const textContent = cell.textContent.trim().toLowerCase();
+                    if (textContent.includes(searchTerm)) {
+                        found = true;
+                    }
+                });
+
+                if (found) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    function getSelectedCin() {
+        var checkboxes = document.getElementsByName('selectedUser');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                return checkboxes[i].value;
+            }
+        }
+        return null;
+    }
+</script>
+<style>
+    /* Styles pour la mise en page lors de l'impression */
+    @media print {
+        /* Cacher la colonne 'actions' lors de l'impression */
+        .no-print {
+            display: none;
+        }
+        /* Autres styles pour la mise en page de l'impression */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+    }
+</style>
+
+
+<script>
+function printTable() {
+    // Copie la table à imprimer dans une nouvelle fenêtre
+    const tableToPrint = document.getElementById('order-listing').outerHTML;
+    const newWindow = window.open('', '_blank');
+    newWindow.document.open();
+    // Ajoute la table à imprimer dans la nouvelle fenêtre
+    newWindow.document.write('<html><head><title>Table des utilisateurs</title></head><body>' + tableToPrint + '</body></html>');
+    newWindow.document.close();
+    // Déclenche l'impression dans la nouvelle fenêtre
+    newWindow.print();
+}
+</script>
+
+
 {% endblock %}
