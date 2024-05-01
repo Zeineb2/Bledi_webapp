@@ -54,7 +54,8 @@ class RegistrationController extends AbstractController
             );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_login');
+
+            return $this->redirectToRoute('check');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -62,23 +63,31 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    /*#[Route('/verify/email', name: 'app_verify_email')]
+    #[Route('/verify/email', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         // validate email confirmation link, sets User::isVerified=true and persists
-       /* try {
+       try {
             $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_login');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('succes', 'Votre adresse mail  a été vérifiée.');
 
         return $this->redirectToRoute('app_login');
-    }*/
+    }
+    #[Route('/check', name: 'check')]
+    public function checkEmail(): Response
+    {
+        $message = "Check your email";
+        return $this->render('registration/check.html.twig', [
+            'message' => $message,
+        ]);
+    }
 }
