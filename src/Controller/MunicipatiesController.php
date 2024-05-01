@@ -17,10 +17,25 @@ class MunicipatiesController extends AbstractController
     #[Route('/', name: 'app_municipaties_index', methods: ['GET'])]
     public function index(MunicipatiesRepository $municipatiesRepository): Response
     {
+        $municipaties = $municipatiesRepository->findAll();
+
+        // Count the number of municipalities for each state
+        $statistics = [];
+        foreach ($municipaties as $municipaty) {
+            $state = $municipaty->getEtatMuni();
+            if (!isset($statistics[$state])) {
+                $statistics[$state] = 1;
+            } else {
+                $statistics[$state]++;
+            }
+        }
+
         return $this->render('municipaties/index.html.twig', [
-            'municipaties' => $municipatiesRepository->findAll(),
+            'municipaties' => $municipaties,
+            'statistics' => $statistics,
         ]);
     }
+    
     #[Route('/front', name: 'app_municipaties_front_index')]
     public function frontIndex(MunicipatiesRepository $municipatiesRepository): Response
     {
@@ -28,7 +43,6 @@ class MunicipatiesController extends AbstractController
             'municipaties' => $municipatiesRepository->findAll(),
         ]);
     }
-    
     #[Route('/new', name: 'app_municipaties_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

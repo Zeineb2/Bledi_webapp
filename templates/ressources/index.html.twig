@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>Ressources index</h1>
-
+<div id="order-listing_filter" class="dataTables_filter">
+                        <input type="search" class="form-control" id="searchInput" placeholder="Search">
+                    </div>
     <table class="table">
         <thead>
             <tr>
@@ -18,7 +20,7 @@
         </thead>
         <tbody>
         {% for ressource in ressources %}
-            <tr>
+            <tr class="ressource-row" data-url="{{ path('app_ressources_show', {'idRessource': ressource.idRessource}) }}">
                 <td>{{ ressource.idRessource }}</td>
                 <td>{{ ressource.nomRessource }}</td>
                 <td>{{ ressource.nbrRessource }}</td>
@@ -38,4 +40,42 @@
     </table>
 
     <a href="{{ path('app_ressources_new') }}">Create new</a>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const rows = document.querySelectorAll('.ressource-row');
+
+            // Function to handle row double-click
+            function handleRowDoubleClick() {
+                const url = this.dataset.url;
+                window.location.href = url;
+            }
+
+            // Add event listener for double-click to each row
+            rows.forEach(row => {
+                row.addEventListener('dblclick', handleRowDoubleClick);
+            });
+
+            // Add event listener for keyup event on the search input
+            searchInput.addEventListener('keyup', function (event) {
+                const searchTerm = event.target.value.trim().toLowerCase();
+
+                rows.forEach(row => {
+                    let found = false;
+                    row.querySelectorAll('td').forEach(cell => {
+                        const textContent = cell.textContent.trim().toLowerCase();
+                        if (textContent.includes(searchTerm)) {
+                            found = true;
+                        }
+                    });
+
+                    if (found) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
