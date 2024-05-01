@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twilio\Rest\Client;
 
 #[Route('/idee')]
 class IdeeController extends AbstractController
@@ -33,6 +34,9 @@ class IdeeController extends AbstractController
             $entityManager->persist($idee);
             $entityManager->flush();
 
+            // Call sendTwilioMessage method after idea is added
+            $this->sendTwilioMessage($idee);
+
             return $this->redirectToRoute('app_idee_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -41,6 +45,7 @@ class IdeeController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{idIdee}', name: 'app_idee_show', methods: ['GET'])]
     public function show(Idee $idee): Response
@@ -77,6 +82,27 @@ class IdeeController extends AbstractController
         }
 
         return $this->redirectToRoute('app_idee_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    // Function to send a Twilio SMS when a new idea is added
+    private function sendTwilioMessage(Idee $idee): void
+    {
+        // Get Twilio credentials from Symfony parameters
+        $twilioAccountSid = $this->getParameter('twilio_account_sid');
+        $twilioAuthToken = $this->getParameter('twilio_auth_token');
+        $twilioPhoneNumber = $this->getParameter('twilio_phone_number');
+
+        // Initialize Twilio client
+        $twilioClient = new Client($twilioAccountSid, $twilioAuthToken);
+
+        // Send message using Twilio client
+        $twilioClient->messages->create(
+            '+21652922478', // Replace with the recipient phone number
+            [
+                'from' => $twilioPhoneNumber,
+                'body' => 'A new idea has been added: ' . $idee->getDescriptionIdee(), // Customize the message body as needed
+            ]
+        );
     }
 
 

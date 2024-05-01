@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/solutions')]
 class SolutionsController extends AbstractController
@@ -25,7 +26,7 @@ class SolutionsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_solutions_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         $solution = new Solutions();
         $form = $this->createForm(SolutionsType::class, $solution);
@@ -34,6 +35,9 @@ class SolutionsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($solution);
             $entityManager->flush();
+
+            // Set flash message
+            $session->getFlashBag()->add('success', 'Solution added successfully!');
 
             return $this->redirectToRoute('app_solutions_index', [], Response::HTTP_SEE_OTHER);
         }
