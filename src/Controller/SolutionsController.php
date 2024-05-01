@@ -20,8 +20,29 @@ class SolutionsController extends AbstractController
     #[Route('/', name: 'app_solutions_index', methods: ['GET'])]
     public function index(SolutionsRepository $solutionsRepository): Response
     {
+        $solutions = $solutionsRepository->findAll();
+
+        // Initialize an empty array to hold the statistics
+        $statistics = [];
+
+        // Loop through each solution
+        foreach ($solutions as $solution) {
+            // Get the state for the current solution
+            $state = $solution->getEtatSol(); // Assuming you have a method like getState() to get the state
+
+            // Check if the state exists in the statistics array
+            if (!isset($statistics[$state])) {
+                // If it doesn't exist, initialize it with count 1
+                $statistics[$state] = 1;
+            } else {
+                // If it exists, increment the count
+                $statistics[$state]++;
+            }
+        }
+
         return $this->render('solutions/index.html.twig', [
-            'solutions' => $solutionsRepository->findAll(),
+            'solutions' => $solutions,
+            'statistics' => $statistics,
         ]);
     }
 
