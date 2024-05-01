@@ -10,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
 
 #[Route('/ressources')]
 class RessourcesController extends AbstractController
@@ -77,5 +80,41 @@ class RessourcesController extends AbstractController
         }
 
         return $this->redirectToRoute('app_ressources_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{idRessource}/pdf', name: 'app_ressource_pdf', methods: ['GET'])]
+    public function generatePdf(Ressources $ressource): Response
+    {
+        // Render the Twig template to HTML
+        $html = $this->renderView('ressources/pdf_template.html.twig', [
+            'ressource' => $ressource,
+        ]);
+
+        // Configure Dompdf options
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->set('isHtml5ParserEnabled', true);
+        $pdfOptions->set('isPhpEnabled', true);
+
+        // Instantiate Dompdf with configured options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set paper size (A4)
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render HTML to PDF
+        $dompdf->render();
+
+        // Get PDF content
+        $output = $dompdf->output();
+
+        // Stream the PDF content as a response
+        $response = new Response($output);
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
     }
 }

@@ -99,4 +99,6 @@ class MunicipatiesController extends AbstractController
 
         return $this->redirectToRoute('app_municipaties_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }
