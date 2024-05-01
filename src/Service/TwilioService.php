@@ -21,7 +21,7 @@ class TwilioService
     {
         $twilioClient = new Client($this->twilioAccountSid, $this->twilioAuthToken);
 
-        $messageBody = '';
+        $messageBody = '_un Utilisateur vient de s inscrire';
 
         $twilioClient->messages->create(
             $phoneNumber,

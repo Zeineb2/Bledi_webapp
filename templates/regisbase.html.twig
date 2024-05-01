@@ -103,11 +103,12 @@ body {
 </head>
 <body>
 <div class="signup-form">
-    <form action="/examples/actions/confirmation.php" method="post">
+{% block body %} 
+    <form action="/examples/actions/confirmation.php" method="POST">
 		<h2>Register</h2>
 		<p class="hint-text">Create your account. It's free and only takes a minute.</p>
         <div class="form-group">
-        {% block body %}
+        
 			<div class="row">
 				<div class="col"><input type="text" class="form-control" name="first_name" placeholder="First Name" required="required"></div>
 				<div class="col"><input type="text" class="form-control" name="last_name" placeholder="Last Name" required="required"></div>
@@ -125,12 +126,13 @@ body {
         <div class="form-group">
 			<label class="form-check-label"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
 		</div>
-        {% endblock %}
+        
 		<div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg btn-block">Register Now</button>
+            <button type="submit" class="btn btn-success btn-lg btn-block">Créer mon compte</button>
         </div>
+		{% endblock %}
     </form>
-	<div class="text-center">Already have an account? <a href="#">Sign in</a></div>
+	<div class="text-center">Already have an account? <a href="{{ path('app_login') }}">S'authentifier</a></div>
 </div>
 </body>
 </html>
