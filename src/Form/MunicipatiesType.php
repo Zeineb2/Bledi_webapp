@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\UX\Autocomplete\Form\AutocompleteType;
 
 class MunicipatiesType extends AbstractType
 {
@@ -42,8 +43,11 @@ class MunicipatiesType extends AbstractType
                     'Tunis' => 'Tunis',
                     'Zaghouan' => 'Zaghouan',
                 ],
+                'placeholder' => '', // Add an empty placeholder
+                'autocomplete' => true, // Enable autocomplete for manual input
             ]);
     }
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {

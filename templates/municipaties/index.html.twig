@@ -5,6 +5,13 @@
 <div id="order-listing_filter" class="dataTables_filter">
                         <input type="search" class="form-control" id="searchInput" placeholder="Search">
                     </div>
+
+         {# Display Flash Messages #}
+            {% for flashMessage in app.session.flashbag.get('success') %}
+                <div class="alert alert-success">
+                    {{ flashMessage }}
+                </div>
+                {%endfor%}
 <div class="row">
  <div class="col-md-6">
             <div class="card">
@@ -94,6 +101,20 @@
 <a href="{{ path('app_municipaties_new') }}">Create new</a>
 
     <script>
+    document.addEventListener('DOMContentLoaded', function () {
+            // Function to remove the flash message after a specified duration
+            function removeFlashMessage() {
+                const flashMessage = document.querySelector('.alert-success');
+                if (flashMessage) {
+                    flashMessage.remove();
+                }
+            }
+
+            // Call the function to remove flash message after 5 seconds (5000 milliseconds)
+            setTimeout(removeFlashMessage, 5000);
+
+            const searchInput = document.getElementById('searchInput');
+            const rows = document.querySelectorAll('.municipaty-row');
         document.addEventListener('DOMContentLoaded', function () {
             const searchInput = document.getElementById('searchInput');
             const rows = document.querySelectorAll('.municipaty-row');
@@ -130,5 +151,6 @@
                 });
             });
         });
+        })
     </script>
 {% endblock %}
