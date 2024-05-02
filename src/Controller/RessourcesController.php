@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Vich\UploaderBundle\Handler\UploadHandler;
 
 #[Route('/ressources')]
 class RessourcesController extends AbstractController
@@ -25,26 +26,38 @@ class RessourcesController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_ressources_new', methods: ['GET', 'POST'])]
-public function new(Request $request, EntityManagerInterface $entityManager): Response
-{
-    $ressource = new Ressources();
-    $form = $this->createForm(RessourcesType::class, $ressource);
-    $form->handleRequest($request);
+    private UploadHandler $uploadHandler;
 
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Handle file upload using VichUploaderBundle
-        $entityManager->persist($ressource);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_ressources_index', [], Response::HTTP_SEE_OTHER);
+    public function __construct(UploadHandler $uploadHandler)
+    {
+        $this->uploadHandler = $uploadHandler;
     }
 
-    return $this->render('ressources/new.html.twig', [
-        'ressource' => $ressource,
-        'form' => $form->createView(),
-    ]);
-}
+    #[Route('/new', name: 'app_ressources_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $ressource = new Ressources();
+        $form = $this->createForm(RessourcesType::class, $ressource);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Handle file upload
+            $this->uploadHandler->upload($ressource, 'imageFile');
+
+            $entityManager->persist($ressource);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_ressources_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('ressources/new.html.twig', [
+            'ressource' => $ressource,
+            'form' => $form,
+        ]);
+    }
+
+
+
 
     #[Route('/{idRessource}', name: 'app_ressources_show', methods: ['GET'])]
     public function show(Ressources $ressource): Response

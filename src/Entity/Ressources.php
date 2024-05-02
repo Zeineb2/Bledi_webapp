@@ -48,6 +48,7 @@ class Ressources
     
     #[Vich\UploadableField(mapping: 'ressources_images', fileNameProperty: 'imgRessource')]
     private ?File $imageFile = null;
+    
     public function getImageFile(): ?File
     {
         return $this->imageFile;

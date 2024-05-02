@@ -1,7 +1,9 @@
+# config/packages/vich_uploader.yaml
 vich_uploader:
     db_driver: orm
+
     mappings:
-        ressources_images: 
-            uri_prefix: /images/ressources
-            upload_destination: '%kernel.project_dir%/public/images/ressources'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        ressources_images:
+            uri_prefix: /uploaded/ressources
+            upload_destination: '%kernel.project_dir%/public/uploaded/ressources'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
