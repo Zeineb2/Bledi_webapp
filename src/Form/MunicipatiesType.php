@@ -9,13 +9,18 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Autocomplete\Form\AutocompleteType;
 use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 
 class MunicipatiesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomMuni')
+        ->add('nomMuni', TextType::class, [
+            'required' => false, // Adjust as needed
+            // Add any other options you need
+        ])
             ->add('adresseMuni')
             ->add('etatMuni', ChoiceType::class, [
                 'choices' => [

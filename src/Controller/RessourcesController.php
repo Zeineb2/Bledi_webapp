@@ -43,6 +43,7 @@ public function index(Request $request, RessourcesRepository $ressourcesReposito
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $entityManager->persist($ressource);
             $entityManager->flush();
 
