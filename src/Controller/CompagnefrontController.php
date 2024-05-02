@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\Dons;
 use App\Form\DonsType;
-use App\Repository\DonsRepository;
 use App\Entity\CompagneDons;
 use App\Form\CompagneDonsType;
 use App\Repository\CompagneDonsRepository;
@@ -16,22 +16,53 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompagnefrontController extends AbstractController
 {
     #[Route('/compagnefront', name: 'app_compagnefront')]
-    public function index(CompagneDonsRepository $compagneDonsRepository): Response
+    public function index(Request $request, CompagneDonsRepository $compagneDonsRepository): Response
     {
+        // Pagination
+        $searchTerm = $request->query->get('searchTerm');
+        $compagneDons = ($searchTerm) ? $compagneDonsRepository->findByFullTextSearch($searchTerm) : $compagneDonsRepository->findAll();
+    
+        $totalItems = count($compagneDons);
+        $itemsPerPage = 3;
+        $totalPages = max(1, ceil($totalItems / $itemsPerPage));
+        $currentPage = $request->query->getInt('currentPage', 1);
+        $currentPage = max(1, min($currentPage, $totalPages));
+        $offset = ($currentPage - 1) * $itemsPerPage;
+        $pagecomp = array_slice($compagneDons, $offset, $itemsPerPage);
+    
         return $this->render('compagnefront/index.html.twig', [
-            //'compagne_dons' => $compagneDonsRepository->findAll(),
-            'compagne_dons' => $compagneDonsRepository->findAllWithTotalAmount(),
+            'compagne_dons' => $pagecomp,
+            'currentPage' => $currentPage,
+            'totalPages' => $totalPages,
+            'searchTerm' => $searchTerm,
         ]);
     }
+    
     #[Route('/{id}', name: 'app_compagnefront_donner', methods: ['GET','POST'])]
-    public function show(CompagneDons $compagneDon,Request $request, EntityManagerInterface $entityManager): Response
+    public function show(CompagneDons $compagneDon, Request $request, EntityManagerInterface $entityManager): Response
     {
         $don = new Dons();
+
         $form = $this->createForm(DonsType::class, $don);
         $form->handleRequest($request);
         $don->setCompagne($compagneDon);
-        if ($form->isSubmitted() && $form->isValid()) {
+       
 
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['virement_img']->getData();
+            $don->setVirementImg("aa");
+            // Convert uploaded image to base64
+            if ($file) {
+                // Convertir l'image base64 en binaire
+                $base64Image = base64_encode(file_get_contents($file->getPathname()));
+
+                // Enregistrer l'image binaire dans l'entité
+                $don->setVirementImg($base64Image);
+            }
+
+            // Store base64 image in your entity
+            // $don->setVirementImg($base64Image);
             $don->setCompagne($compagneDon);
             $entityManager->persist($don);
             $entityManager->flush();
@@ -44,13 +75,28 @@ class CompagnefrontController extends AbstractController
             'don' => $don,
             'form' => $form->createView(),
         ]);
-
-
-
-       
-
-        
     }
 
-  
+   
+
+    /*
+    #[Route('/compagnes', name: 'compagnes')]
+    public function list(Request $request): Response
+    {
+        $page = $request->query->getInt('page', 1); // Récupérer le numéro de page à partir de la requête
+        $compagnesPerPage = 4; // Nombre de compagnes de dons par page
+        $offset = ($page - 1) * $compagnesPerPage; // Calculer l'offset en fonction du numéro de page
+        $compagnesRepository = $this->getDoctrine()->getRepository(CompagneDons::class);
+        $totalCompagnes = $compagnesRepository->count([]); // Nombre total de compagnes de dons
+        $totalPages = ceil($totalCompagnes / $compagnesPerPage); // Nombre total de pages
+    
+        $compagnes = $compagnesRepository->findBy([], null, $compagnesPerPage, $offset); // Récupérer les compagnes de dons paginées depuis la base de données
+    
+        return $this->render('compagnes/index.html.twig', [
+            'compagnes' => $compagnes,
+            'currentPage' => $page, // Passer le numéro de page actuel à la vue
+            'totalPages' => $totalPages, // Passer le nombre total de pages à la vue
+        ]);
+    }
+    */
 }

@@ -23,13 +23,43 @@ class CompagneDonsRepository extends ServiceEntityRepository
     }
      /**
      * @return CompagneDons[] Returns an array of CompagneDons objects with total amount of donations
-     */
-    public function findAllWithTotalAmount()
+     */ 
+
+     public function findAllWithTotalAmount()
+     {
+         $result = $this->createQueryBuilder('c')
+             ->select('c', 'SUM(d.montant_don) AS totalAmount')
+             ->leftJoin('c.dons', 'd')
+             ->groupBy('c.id')
+             ->getQuery()
+             ->getResult();
+     
+         // Calculate totalAmount by summing the montant_don of each donation
+         foreach ($result as $row) {
+             // Extract the CompagneDons entity and totalAmount from the result row
+             /** @var CompagneDons $compagne */
+             $compagne = $row[0];
+             $totalAmount = $row['totalAmount'];
+     
+             // Calculate totalAmount by summing the montant_don of each donation associated with the campaign
+             foreach ($compagne->getDons() as $don) {
+                 $totalAmount += $don->getMontantDon();
+             }
+     
+             // Set the calculated totalAmount to the result row
+             $row['totalAmount'] = $totalAmount;
+         }
+     
+         return $result;
+     }
+     
+     
+    public function findByFullTextSearch($searchTerm):array
     {
         return $this->createQueryBuilder('c')
-            ->select('c', 'SUM(d.montant_don) AS totalAmount')
-            ->leftJoin('c.dons', 'd')
-            ->groupBy('c.id')
+            ->andWhere('c.descrip LIKE :searchTerm ')
+            ->setParameter('searchTerm', '%' . $searchTerm . '%')
+            ->orderBy('c.id', 'ASC')
             ->getQuery()
             ->getResult();
     }

@@ -2,7 +2,9 @@
 
 {% block title %}Bledi compagne dons{% endblock %}
 
-{% block body %}
+{% block body %} 
+
+
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">Data table</h4>
@@ -37,29 +39,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for compagne in compagne_dons %}
-                                <tr>
-                                    <td>{{ compagne[0].getDescrip() }}</td>
-                                  
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ (compagne['totalAmount'] / compagne[0].getMontantE()) * 100 }}%;" aria-valuenow="{{ compagne['totalAmount'] }}" aria-valuemin="0" aria-valuemax="{{ compagne[0].getMontantE() }}"></div>
-                                        </div>
-                                    </td>
-                                    <td>{{ compagne[0].getMontantE() }}</td>
-                                    <td>{{ compagne[0].getMuni().getNomMuni() }}</td>
-                                    <td>{{ compagne[0].getDateD() ? compagne[0].getDateD()|date('Y-m-d') : '' }}</td>
-                                    <td>{{ compagne[0].getDateF() ? compagne[0].getDateF()|date('Y-m-d') : '' }}</td>
-                                    <td>
-                                        <a href="{{ path('app_compagne_dons_show', {'id': compagne[0].getId()}) }}">show</a>
-                                        <a href="{{ path('app_compagne_dons_edit', {'id': compagne[0].getId()}) }}">edit</a>
-                                    </td>
-                                </tr>
-                            {% else %}
-                                <tr>
-                                    <td colspan="6">No records found</td>
-                                </tr>
-                            {% endfor %}
+                           {% for comp in comps %}
+    <tr>
+        <td>{{ comp.getDescrip() }}</td>
+            <td>
+                <div class="progress">
+    <div class="progress-bar bg-success" role="progressbar" style="width: {{ (comp.gettotalAmount() / comp.getMontantE()) * 100 }}%;" aria-valuenow="{{ comp.totalAmount }}" aria-valuemin="0" aria-valuemax="{{ comp.getMontantE() }}"></div>
+</div>
+
+            </td>
+        <td>{{ comp.getMontantE() }}</td>
+        <td>{{ comp.getMuni().getNomMuni() }}</td>
+        <td>{{ comp.getDateD() ? comp.getDateD()|date('Y-m-d') : '' }}</td>
+        <td>{{ comp.getDateF() ? comp.getDateF()|date('Y-m-d') : '' }}</td>
+        <td>
+            <a href="{{ path('app_compagne_dons_show', {'id': comp.getId()}) }}">show</a>
+            <a href="{{ path('app_compagne_dons_edit', {'id': comp.getId()}) }}">edit</a>
+        </td>
+    </tr>
+{% else %}
+    <tr>
+        <td colspan="6">No records found</td>
+    </tr>
+{% endfor %}
+
                         </tbody>
                     </table>
                 </div>

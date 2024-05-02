@@ -3,8 +3,53 @@
 {% block title %}New CompagneDons{% endblock %}
 
 {% block stylesheets %}
-    {# Include your CSS file here #}
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    {{ parent() }}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-right: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 {% endblock %}
 
 {% block body %}
@@ -21,28 +66,33 @@
         {{ form_start(form, {'attr': {'class': 'forms-sample'}}) }}
 
         <div class="form-group">
-            {{ form_row(form.date_d, {'attr': {'class': 'form-control'}}) }}
+            <label for="{{ form.date_d.vars.id }}">Date Debut:</label>
+            {{ form_widget(form.date_d, {'attr': {'class': 'form-control'}}) }}
         </div>
        
         <div class="form-group">
-            {{ form_row(form.date_f, {'attr': {'class': 'form-control'}}) }}
+            <label for="{{ form.date_f.vars.id }}">Date Fin:</label>
+            {{ form_widget(form.date_f, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <div class="form-group">
-            {{ form_row(form.montant_e, {'attr': {'class': 'form-control'}}) }}
+            <label for="{{ form.montant_e.vars.id }}">Montant:</label>
+            {{ form_widget(form.montant_e, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <div class="form-group">
-            {{ form_row(form.descrip, {'attr': {'class': 'form-control'}}) }}
+            <label for="{{ form.descrip.vars.id }}">Description:</label>
+            {{ form_widget(form.descrip, {'attr': {'class': 'form-control'}}) }}
         </div>
         
         <div class="form-group">
-            {{ form_row(form.muni, {'attr': {'class': 'form-control'}}) }}
+            <label for="{{ form.muni.vars.id }}">Muni:</label>
+            {{ form_widget(form.muni, {'attr': {'class': 'form-control'}}) }}
         </div>
 
         <button type="submit" class="btn btn-primary mr-2">Submit</button>
         {{ form_end(form) }}
 
-        <a href="{{ path('app_compagne_dons_index') }}">Back to list</a>
+        <a href="{{ path('app_compagne_dons_index') }}" class="btn btn-secondary">Back to list</a>
     </form>
 {% endblock %}

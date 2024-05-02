@@ -34,7 +34,7 @@
      
      <h1>Ajouter Votre Dons : </h1>
 
-   <form method="post" novalidate>
+   <form method="post" novalidate  enctype="multipart/form-data">
    {{ form_start(form, {'attr': {'class': 'forms-sample'}}) }}
         <div class="form-group">
             {{ form_label(form.montant_don) }}

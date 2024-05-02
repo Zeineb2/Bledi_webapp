@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-
+use Mpdf\Mpdf;
 #[ORM\Entity(repositoryClass: CompagneDonsRepository::class)]
 class CompagneDons
 {
@@ -34,6 +34,13 @@ class CompagneDons
     #[ORM\ManyToOne(inversedBy: 'compagneDons')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Municipaties $muni = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $totalAmount = null;
+
+    
+
+   
 
     public function __construct()
     {
@@ -134,4 +141,18 @@ class CompagneDons
 
         return $this;
     }
+
+    public function getTotalAmount(): ?int
+    {
+        return $this->totalAmount;
+    }
+
+    public function setTotalAmount(?int $totalAmount): static
+    {
+        $this->totalAmount = $totalAmount;
+
+        return $this;
+    }
+
+  
 }

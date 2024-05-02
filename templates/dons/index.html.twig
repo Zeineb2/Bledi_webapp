@@ -4,6 +4,7 @@
 
 {% block body %}
     <h1>Dons </h1>
+  
 
     <table class="table">
         <thead>
@@ -38,4 +39,35 @@
     </table>
 
     <a href="{{ path('app_dons_new') }}">Create new</a>
+
+
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const blogItems = document.getElementsByClassName('blog__item');
+        let found = false; // Indicateur pour savoir si au moins un élément correspond au terme de recherche
+
+        for (let i = 0; i < blogItems.length; i++) {
+            const blogItem = blogItems[i];
+            const blogTitle = blogItem.querySelector('h3').textContent.toLowerCase();
+            const blogContent = blogItem.querySelector('.blog__content').textContent.toLowerCase();
+
+            if (blogTitle.includes(searchTerm) || blogContent.includes(searchTerm)) {
+                blogItem.style.display = ''; // Afficher l'élément s'il correspond
+                found = true; // Définir l'indicateur à true
+            } else {
+                blogItem.style.display = 'none';
+            }
+        }
+
+        // Si aucun élément ne correspond au terme de recherche, afficher un message ou effectuer une autre action
+        if (!found) {
+            // Faire quelque chose, par exemple :
+            console.log("Aucun résultat trouvé.");
+        }
+    });
+});
 {% endblock %}
