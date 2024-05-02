@@ -1,0 +1,4 @@
+# See https://github.com/excelwebzone/EWZRecaptchaBundle for full configuration
+ewz_recaptcha:
+    public_key:  6LeYkc0pAAAAAN_0FCQUegrv30Gvo42Z4JXZl3nO
+    private_key: 6LeYkc0pAAAAAMlrv-gdMl38YGDLC3-uYldURoVK

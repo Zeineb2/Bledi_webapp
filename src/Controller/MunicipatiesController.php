@@ -10,10 +10,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaType;
+use ReCaptcha\ReCaptcha;
+use Symfony\Component\Form\FormError;
+
 
 #[Route('/municipaties')]
 class MunicipatiesController extends AbstractController
 {
+
+    private $recaptcha;
+
+    public function __construct(ReCaptcha $recaptcha)
+    {
+        $this->recaptcha = $recaptcha;
+    }
+
+
     #[Route('/', name: 'app_municipaties_index', methods: ['GET'])]
     public function index(MunicipatiesRepository $municipatiesRepository): Response
     {
@@ -43,25 +58,56 @@ class MunicipatiesController extends AbstractController
             'municipaties' => $municipatiesRepository->findAll(),
         ]);
     }
-    #[Route('/new', name: 'app_municipaties_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+
+
+#[Route('/new', name: 'app_municipaties_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager, ParameterBagInterface $parameterBag): Response
     {
         $municipaty = new Municipaties();
         $form = $this->createForm(MunicipatiesType::class, $municipaty);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Validate reCAPTCHA
+            $recaptchaResponse = $request->request->get('g-recaptcha-response');
+            $isRecaptchaValid = $this->isRecaptchaValid($recaptchaResponse);
+
+            if (!$isRecaptchaValid) {
+                // Add an error message to the form
+                $form->addError(new FormError('reCAPTCHA validation failed'));
+    
+                // Render the same page with the form and error message
+                return $this->renderForm('municipaties/new.html.twig', [
+                    'municipaty' => $municipaty,
+                    'form' => $form,
+                    'ewzRecaptchaKey' => '6LeYkc0pAAAAAN_0FCQUegrv30Gvo42Z4JXZl3nO', // Provided reCAPTCHA site key
+                ]);
+            }
+
+            // Proceed with saving the municipality if reCAPTCHA validation passes
             $entityManager->persist($municipaty);
             $entityManager->flush();
 
             return $this->redirectToRoute('app_municipaties_index', [], Response::HTTP_SEE_OTHER);
         }
 
+        // Pass the reCAPTCHA site key to the Twig template
+        $ewzRecaptchaKey = $parameterBag->get('ewz_recaptcha.public_key');
+
         return $this->renderForm('municipaties/new.html.twig', [
             'municipaty' => $municipaty,
             'form' => $form,
+            'ewzRecaptchaKey' => $ewzRecaptchaKey,
         ]);
     }
+
+    private function isRecaptchaValid(string $recaptchaResponse): bool
+    {
+        $response = $this->recaptcha->verify($recaptchaResponse);
+
+        return $response->isSuccess();
+    }
+
 
     #[Route('/{id}', name: 'app_municipaties_show', methods: ['GET'])]
     public function show(Municipaties $municipaty): Response
