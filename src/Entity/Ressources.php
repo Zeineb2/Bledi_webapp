@@ -5,9 +5,10 @@ namespace App\Entity;
 use App\Repository\RessourcesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 #[ORM\Entity(repositoryClass: RessourcesRepository::class)]
-
+#[Vich\Uploadable]
 class Ressources
 {
     #[ORM\Id]
@@ -44,6 +45,19 @@ class Ressources
     #[ORM\JoinColumn(name: 'ID_muni', referencedColumnName: 'id')]
     #[Assert\NotBlank(message: "this field cannot be blank")]
     private ?Municipaties $IDMuni = null;
+    
+    #[Vich\UploadableField(mapping: 'ressources_images', fileNameProperty: 'imgRessource')]
+    private ?File $imageFile = null;
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): void
+    {
+        $this->imageFile = $imageFile;
+    }
+
     
     public function getIdRessource(): ?int
     {

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 #[Route('/ressources')]
 class RessourcesController extends AbstractController
@@ -26,24 +26,25 @@ class RessourcesController extends AbstractController
     }
 
     #[Route('/new', name: 'app_ressources_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $ressource = new Ressources();
-        $form = $this->createForm(RessourcesType::class, $ressource);
-        $form->handleRequest($request);
+public function new(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $ressource = new Ressources();
+    $form = $this->createForm(RessourcesType::class, $ressource);
+    $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($ressource);
-            $entityManager->flush();
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Handle file upload using VichUploaderBundle
+        $entityManager->persist($ressource);
+        $entityManager->flush();
 
-            return $this->redirectToRoute('app_ressources_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('ressources/new.html.twig', [
-            'ressource' => $ressource,
-            'form' => $form,
-        ]);
+        return $this->redirectToRoute('app_ressources_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    return $this->render('ressources/new.html.twig', [
+        'ressource' => $ressource,
+        'form' => $form->createView(),
+    ]);
+}
 
     #[Route('/{idRessource}', name: 'app_ressources_show', methods: ['GET'])]
     public function show(Ressources $ressource): Response
