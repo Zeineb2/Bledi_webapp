@@ -10,7 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 #[Route('/municipaties')]
 class MunicipatiesController extends AbstractController
@@ -45,7 +44,7 @@ class MunicipatiesController extends AbstractController
         ]);
     }
     #[Route('/new', name: 'app_municipaties_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SessionInterface $session ): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $municipaty = new Municipaties();
         $form = $this->createForm(MunicipatiesType::class, $municipaty);
@@ -54,8 +53,7 @@ class MunicipatiesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($municipaty);
             $entityManager->flush();
-          // Set flash message
-            $session->getFlashBag()->add('success', 'Solution added successfully!');
+
             return $this->redirectToRoute('app_municipaties_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -101,6 +99,4 @@ class MunicipatiesController extends AbstractController
 
         return $this->redirectToRoute('app_municipaties_index', [], Response::HTTP_SEE_OTHER);
     }
-
-    
 }

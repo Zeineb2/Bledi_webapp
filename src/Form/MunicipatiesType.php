@@ -46,6 +46,7 @@ class MunicipatiesType extends AbstractType
                 'placeholder' => '', // Add an empty placeholder
                 'autocomplete' => true, // Enable autocomplete for manual input
             ]);
+            
     }
 
 
