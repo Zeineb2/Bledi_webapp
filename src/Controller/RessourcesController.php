@@ -12,27 +12,29 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Vich\UploaderBundle\Form\Type\VichImageType;
-use Vich\UploaderBundle\Handler\UploadHandler;
+use Knp\Component\Pager\PaginatorInterface;
+
 
 #[Route('/ressources')]
 class RessourcesController extends AbstractController
 {
     #[Route('/', name: 'app_ressources_index', methods: ['GET'])]
-    public function index(RessourcesRepository $ressourcesRepository): Response
-    {
-        return $this->render('ressources/index.html.twig', [
-            'ressources' => $ressourcesRepository->findAll(),
-        ]);
-    }
+public function index(Request $request, RessourcesRepository $ressourcesRepository, PaginatorInterface $paginator): Response
+{
+    // Retrieve all resources from repository
+    $allRessourcesQuery = $ressourcesRepository->findAll(); // Assuming you have a custom query method in your repository
 
-    private UploadHandler $uploadHandler;
+    // Paginate the results
+    $pagination = $paginator->paginate(
+        $allRessourcesQuery, // Query object
+        $request->query->getInt('page', 1), // Page number
+        1 // Limit per page
+    );
 
-    public function __construct(UploadHandler $uploadHandler)
-    {
-        $this->uploadHandler = $uploadHandler;
-    }
-
+    return $this->render('ressources/index.html.twig', [
+        'pagination' => $pagination,
+    ]);
+}
     #[Route('/new', name: 'app_ressources_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -41,9 +43,6 @@ class RessourcesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // Handle file upload
-            $this->uploadHandler->upload($ressource, 'imageFile');
-
             $entityManager->persist($ressource);
             $entityManager->flush();
 
@@ -55,9 +54,6 @@ class RessourcesController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
-
 
     #[Route('/{idRessource}', name: 'app_ressources_show', methods: ['GET'])]
     public function show(Ressources $ressource): Response

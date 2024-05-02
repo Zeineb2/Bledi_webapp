@@ -6,7 +6,6 @@ use App\Entity\Ressources;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class RessourcesType extends AbstractType
 {
@@ -16,11 +15,8 @@ class RessourcesType extends AbstractType
             ->add('IDMuni')
             ->add('nomRessource')
             ->add('nbrRessource')
-            ->add('imageFile', FileType::class, [
-                'label' => 'Resource Image',
-                'required' => false, // To allow submitting the form without selecting an image
-                'mapped' => false, // Not mapped to any property since VichUploader handles it
-            ]);
+            ->add('imgRessource')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

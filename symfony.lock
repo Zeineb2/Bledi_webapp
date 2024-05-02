@@ -77,6 +77,9 @@
             "./config/packages/google_recaptcha.yaml"
         ]
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
+    },
     "mercuryseries/flashy-bundle": {
         "version": "v5.1.0"
     },
