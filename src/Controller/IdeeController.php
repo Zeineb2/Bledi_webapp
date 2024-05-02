@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twilio\Rest\Client;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Form\FormError;
+
+
 
 #[Route('/idee')]
 class IdeeController extends AbstractController
@@ -24,13 +28,23 @@ class IdeeController extends AbstractController
     }
 
     #[Route('/new', name: 'app_idee_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, ValidatorInterface $validator): Response
     {
         $idee = new Idee();
         $form = $this->createForm(IdeeType::class, $idee);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Validate against bad words
+            $description = $idee->getDescriptionIdee();
+            if ($this->containsBadWords($description)) {
+                $form->get('descriptionIdee')->addError(new FormError('The description contains forbidden words.'));
+                return $this->renderForm('idee/new.html.twig', [
+                    'idee' => $idee,
+                    'form' => $form,
+                ]);
+            }
+
             $entityManager->persist($idee);
             $entityManager->flush();
 
@@ -45,6 +59,19 @@ class IdeeController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    // Function to check for bad words
+    private function containsBadWords(string $description): bool
+    {
+        $forbiddenWords = ['fuck', 'bitch', 'bad word']; // Add your list of forbidden words here
+        foreach ($forbiddenWords as $word) {
+            if (stripos($description, $word) !== false) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 
     #[Route('/{idIdee}', name: 'app_idee_show', methods: ['GET'])]

@@ -20,6 +20,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative; /* Add position relative to position absolute logo and signature */
         }
         h1 {
             text-align: center;
@@ -42,12 +43,14 @@
             font-weight: bold;
         }
         .logo {
-            text-align: center;
-            margin-bottom: 20px;
+            position: absolute;
+            top: 20px;
+            left: 20px;
         }
         .signature {
-            text-align: center;
-            margin-top: 40px;
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
         }
         .logo img {
             max-width: 200px;
@@ -61,6 +64,10 @@
 </head>
 <body>
 <div class="container">
+
+    <div class="logo">
+        <img src="https://www.dropbox.com/scl/fi/rayyenawe18mnpoypkrlv/image_2024-04-17_160149071-Photoroom.png-Photoroom.png?rlkey=2qbq8vdtjey1wuexjarlau18f&st=5n7amcwp&dl=0" alt="Logo">
+    </div>
 
     <h1>Solution Information</h1>
     <table>
@@ -81,6 +88,10 @@
             <td>{{ solution.budgetSol }}</td>
         </tr>
     </table>
+
+    <div class="signature">
+        <img src="signature.png" alt="Signature">
+    </div>
 
 </div>
 </body>

@@ -54,6 +54,13 @@ class SolutionsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // Check if date debut comes after date fin
+            if ($solution->getDatedSol() > $solution->getDatefSol()) {
+                // Set flash message for error
+                $session->getFlashBag()->add('error', 'Date debut cannot come after date fin.');
+                return $this->redirectToRoute('app_solutions_new');
+            }
+
             $entityManager->persist($solution);
             $entityManager->flush();
 
@@ -68,6 +75,7 @@ class SolutionsController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{idSol}', name: 'app_solutions_show', methods: ['GET'])]
     public function show(Solutions $solution): Response
