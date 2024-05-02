@@ -63,7 +63,7 @@ class IdeeController extends AbstractController
     // Function to check for bad words
     private function containsBadWords(string $description): bool
     {
-        $forbiddenWords = ['fuck', 'bitch', 'bad word']; // Add your list of forbidden words here
+        $forbiddenWords = ['bad word', 'fuck', 'bitch']; // Add your list of forbidden words here
         foreach ($forbiddenWords as $word) {
             if (stripos($description, $word) !== false) {
                 return true;
@@ -71,8 +71,6 @@ class IdeeController extends AbstractController
         }
         return false;
     }
-
-
 
     #[Route('/{idIdee}', name: 'app_idee_show', methods: ['GET'])]
     public function show(Idee $idee): Response

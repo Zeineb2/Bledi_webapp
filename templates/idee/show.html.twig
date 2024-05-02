@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <th>DescriptionIdee</th>
-                <td>{{ idee.descriptionIdee }}</td>
+                <td id="description">{{ idee.descriptionIdee }}</td>
             </tr>
             <tr>
                 <th>ImageIdee</th>
@@ -32,4 +32,20 @@
             {{ include('idee/_delete_form.html.twig') }}
         </div>
     </div>
+
+    <!-- Include ResponsiveVoice script -->
+    <script src="https://code.responsivevoice.org/responsivevoice.js"></script>
+
+    <script>
+        // Function to read the description
+        function readDescription() {
+            var description = document.getElementById('description').innerText;
+            responsiveVoice.speak(description);
+        }
+
+        // Read the description when the page loads
+        window.onload = function() {
+            readDescription();
+        };
+    </script>
 {% endblock %}
