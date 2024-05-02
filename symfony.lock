@@ -47,6 +47,9 @@
             "ref": "20154480d558409ad3eb9de3644817c81fad2268"
         }
     },
+    "knplabs/knp-paginator-bundle": {
+        "version": "v5.9.0"
+    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {

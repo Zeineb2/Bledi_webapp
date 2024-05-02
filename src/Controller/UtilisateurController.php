@@ -108,7 +108,7 @@ class UtilisateurController extends AbstractController
         $html = $this->renderView('utilisateur/pdf_template.html.twig', [
             'utilisateur' => $utilisateur,
         ]);
-
+   
         // Options de configuration pour Dompdf
         $pdfOptions = new Options();
         $pdfOptions->set('defaultFont', 'Arial');

@@ -56,7 +56,7 @@ class Utilisateur implements UserInterface
     private ?int $idMuni=0;
 
     #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
+    private $isVerified = 0;
 
     public function getCin(): ?int
     {
