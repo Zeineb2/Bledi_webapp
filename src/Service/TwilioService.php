@@ -1,36 +1,27 @@
 <?php
 // src/Service/TwilioService.php
+
 namespace App\Service;
 
-use twilio\Rest\Client;
+use Twilio\Rest\Client;
 
 class TwilioService
 {
-    private $twilioAccountSid;
-    private $twilioAuthToken;
-    private $twilioPhoneNumber;
+    private $client;
 
-    public function __construct(string $twilioAccountSid, string $twilioAuthToken, string $twilioPhoneNumber)
+    public function __construct(string $sid, string $token)
     {
-        $this->twilioAccountSid = $twilioAccountSid;
-        $this->twilioAuthToken = $twilioAuthToken;
-        $this->twilioPhoneNumber = $twilioPhoneNumber;
+        $this->client = new Client($sid, $token);
     }
 
-    public function sendWelcomeMessage(string $phoneNumber): void
+    public function sendSMS(string $to, string $message): void
     {
-        $twilioClient = new Client($this->twilioAccountSid, $this->twilioAuthToken);
-
-        $messageBody = '_un Utilisateur vient de s inscrire';
-
-        $twilioClient->messages->create(
-            $phoneNumber,
+        $this->client->messages->create(
+            $to,
             [
-                'from' => $this->twilioPhoneNumber,
-                'body' => $messageBody,
-                //'to' => 
+                'from' => $_ENV['TWILIO_PHONE_NUMBER'],
+                'body' => $message
             ]
         );
     }
 }
-
