@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}evenemt{% endblock %}
+
+{% block body %}
+<style>
+    .parallax-window {
+        background-color: #0000 !important;
+    }
+</style>
+
+<section class="parallax-window" data-parallax="scroll" style="" data-natural-width="1400" data-natural-height="470">
+    <div class="parallax-content-1 opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.4)">
+        <div class="animated fadeInDown">
+            <h1>Découvrez les Événements</h1>
+            <p>Explorez des événements uniques, où la nature rencontre l'aventure, et où chaque participation contribue à préserver notre planète.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Fin de la section -->
+<div class="card-body">
+    <h5 class="card-title">reservations aux evenemt</h5>
+
+    <!-- Tableau des reservations aux evenemt -->
+    {% for response in reservationss %}
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Nom complet: {{ response.fullname }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Réclamation: {{ response.evenementss.nom_event }}</h6>
+            <p class="card-text">Description: {{ response.description }}</p>
+            <div class="btn-group" role="group" aria-label="Actions">
+         
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div class="pagination">
+        {{ knp_pagination_render(reservationss) }}
+    </div>
+</div>
+{% endblock %}

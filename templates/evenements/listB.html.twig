@@ -1,0 +1,78 @@
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+<div class="content-page">
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Liste des evenement</h5>
+
+                            <!-- Formulaire de recherche -->
+                            <form action="{{ path('afficher_evenements') }}" method="GET">
+                                <div class="form-group">
+                                    <label for="search">Rechercher par nom, type ou description_event :</label>
+                                    <input type="text" class="form-control" id="search" name="search" value="{{ app.request.query.get('search') }}">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Rechercher</button>
+                            </form>
+                            <!-- Fin du formulaire de recherche -->
+
+                            <!-- Tableau des evenemt filtrées -->
+                            {% for recl in Evenements %}
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Nom: {{ recl.nom_event }}</h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">DateDepart: {{ recl.dateD|date('d-m-Y') }}</h6>
+                                    <h6 class="card-subtitle mb-2 text-muted">dateFin evenement: {{ recl.dateF|date('d-m-Y') }}</h6>
+                                    <p class="card-text">categorie: {{ recl.categorie_evenet }}</p>
+                                    <p class="card-text">description: {{ recl.description_event }}</p>
+                                    <p class="card-text">nombre: {{ recl.nbp_event }}</p>
+                                    
+                                    <img src="{{ asset('uploads/images/' ~ recl.image) }}" style="width:80px; height:80px;" />
+                                    <div class="btn-group" role="group" aria-label="Actions">
+                                        
+                                        <a class="btn cur-p btn-danger" href="{{ path('delete_ab', {'id': recl.id}) }}">Supprimer</a>
+                                        <a class="btn cur-p btn-success" href="{{ path('update_ab', {'id': recl.id}) }}">Mettre à jour</a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <!-- Fin du tableau des evenement filtrées -->
+
+                            <!-- Pagination -->
+                            <div class="pagination">
+                                {% set currentPage = Evenements.currentPageNumber %}
+                                {% set previous = currentPage > 1 ? currentPage - 1 : false %}
+                                {% set next = currentPage < Evenements.pageCount ? currentPage + 1 : false %}
+                                <ul class="pagination">
+                                    {% if previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('afficher_evenements') }}?page={{ previous }}">Précédent</a>
+                                        </li>
+                                    {% endif %}
+                                    <li class="page-item active">
+                                        <span class="page-link">{{ currentPage }}</span>
+                                    </li>
+
+                                    
+                                    {% if next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ path('afficher_evenements') }}?page={{ next }}">Suivant</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <!-- Fin de la pagination -->
+                            <!-- Ajoutez ce lien à la suite de votre contenu -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

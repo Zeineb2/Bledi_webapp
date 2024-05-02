@@ -1,0 +1,22 @@
+
+
+{% extends 'admin.html.twig' %}
+
+{% block title %}Evenements {% endblock %}
+
+
+{% block body %}
+    
+
+    <!-- Fin de la section -->
+     {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    <div class="card-body">
+        <h5 class="card-title">add Evenements/h5>
+
+        {{form_start(form,{'attr' :{'novalidate':'novalidate'}})}}
+
+        {{ form_end(form) }}
+    </div>
+    <!-- Fin du main -->
+
+    {% endblock %}
