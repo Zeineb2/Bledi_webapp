@@ -14,7 +14,10 @@ use DateTime;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
 use Twilio\Rest\Client;
-use App\Service\SMSService; 
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use App\Entity\Reclamation;
 
 class ReclamationsController extends AbstractController
 {
@@ -54,7 +57,7 @@ class ReclamationsController extends AbstractController
     //     ]);
     // }
     #[Route('/addrec', name: 'add_reclamations',methods:["GET","POST"])]
-    public function save(Request $request,NotifierInterface $notifier,SMSService $service): Response
+    public function save(Request $request,NotifierInterface $notifier,ReclamationsRepository $service): Response
     {
         
         $rec = new Reclamations();
@@ -89,7 +92,7 @@ class ReclamationsController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($rec);
             $entityManager->flush();
-            $service->sendSMS("dali");
+            $service->sms();
  
             return $this->redirectToRoute('app_reclamations', [], Response::HTTP_SEE_OTHER);
             }
@@ -136,6 +139,7 @@ class ReclamationsController extends AbstractController
             $entityManager->flush();
         return $this->redirectToRoute('app_reclamations');
     }
+    
     // public function sendSms($phone,$brandName,$message){
     //     $basic  = new \Vonage\Client\Credentials\Basic("bb5f8701", "u9zRzmNvwDvjsRLg");
     //     $client = new \Vonage\Client($basic);
@@ -155,5 +159,40 @@ class ReclamationsController extends AbstractController
         
         
     // }
+    #[Route('/pdf/{ID_rec}', name: 'app_reclamations_pdf', methods: ['GET'])]
+    public function generatePdf(Reclamation $reclamation): Response
+    {
+        // Render the Twig template to HTML
+        $html = $this->renderView('reclamations/pdf_template.html.twig', [
+            'reclamation' => $reclamation,
+        ]);
+
+        // Configure Dompdf options
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        $pdfOptions->set('isHtml5ParserEnabled', true);
+        $pdfOptions->set('isPhpEnabled', true);
+
+        // Instantiate Dompdf with configured options
+        $dompdf = new Dompdf($pdfOptions);
+
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set paper size (A4)
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render HTML to PDF
+        $dompdf->render();
+
+        // Get PDF content
+        $output = $dompdf->output();
+
+        // Stream the PDF content as a response
+        $response = new Response($output);
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        return $response;
+    }
 
 }

@@ -24,9 +24,9 @@ class MailerService
         
         $email = (new Email())
             ->from('trabelsi.dali484@gmail.com')
-            ->to("trabelsi.dali484@gmail.com")
+            ->to("eyaridane8@gmail.com")
             ->subject("bonjour")
-            ->text("bonjour");
+            ->text("traitée");
             
              
             $this->mailer->send($email);

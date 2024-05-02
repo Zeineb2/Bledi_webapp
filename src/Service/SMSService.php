@@ -6,18 +6,18 @@ use Twilio\Rest\Client;
 {
     function sendSMS($nom)
     {
-    $sid = 'AC178ae7e7e2e320a25709cb50b555834c';
-$token = '8d98dc3965344773ea83cf3ebdaea666';
+    $sid = 'AC977033caa6735f5f352d2ae54f98273e';
+$token = '6b00884c1f11e23df7c8b1b3676fa630';
 
 // Initialisation du client Twilio
 $client = new Client($sid, $token);
 $message = $client->messages->create(
-    'YOUR_TWILIO_PHONE_NUMBER', // Numéro Twilio "from"
+    '+12185203629', // Numéro Twilio "from"
     [
-        'from' => '+21625627870',
+        'from' => '+12185203629',
         'body' => 'le client'  . $nom . ' a ajouter une reclamation', // Corps du message SMS
-        'to' => '+12057934754' // Numéro de téléphone de destination
-    ]
+        'to' => '+21629250170' // Numéro de téléphone de destination
+    ] 
 );
     }
 
