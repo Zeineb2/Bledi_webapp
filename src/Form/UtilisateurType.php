@@ -19,7 +19,9 @@ class UtilisateurType extends AbstractType
             ->add('adresse')
             ->add('rate')
             ->add('pwd')
-            ->add('role')
+            ->add('role', null, [
+                'required' => false,
+            ])
             ->add('posteAg')
             ->add('idMuni')
             ->add('isVerified')

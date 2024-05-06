@@ -44,8 +44,8 @@ class Utilisateur implements UserInterface
     private ?string $pwd;
 
     
-    #[ORM\Column(length: 255)]
-    private ?string $role= "citoyen";
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $role= "ROLE_CITOYEN";
 
    
     #[ORM\Column(length: 255)]
@@ -61,6 +61,13 @@ class Utilisateur implements UserInterface
     public function getCin(): ?int
     {
         return $this->cin;
+    }
+    public function setCin(int $cin)
+    {
+        $this->cin = $cin;
+
+        return $this;
+        
     }
 
     public function getNom(): ?string

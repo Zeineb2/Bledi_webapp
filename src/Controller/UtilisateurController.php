@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 
-#[Route('/utilisateur')]
+#[Route('/admin')]
 class UtilisateurController extends AbstractController
 {
     #[Route('/', name: 'app_utilisateur_index', methods: ['GET'])]
