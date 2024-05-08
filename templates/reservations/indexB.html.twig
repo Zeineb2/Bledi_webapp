@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenements | Écotourisme{% endblock %}
+
+{% block body %}
+<style>
+    .parallax-window {
+        background-color: #0000 !important;
+    }
+    
+    /* Style pour le formulaire de notation (rating) */
+    .rating {
+        display: inline-block;
+        direction: rtl;
+    }
+
+    .rating input {
+        display: none;
+    }
+
+    .rating label {
+        font-size: 25px;
+        color: #ccc;
+        cursor: pointer;
+    }
+
+    .rating label:hover,
+    .rating label:hover ~ label,
+    .rating input:checked ~ label {
+        color: #f39c12; /* Couleur orange lorsqu'une étoile est survolée ou sélectionnée */
+    }
+</style>
+
+<section class="parallax-window" data-parallax="scroll" style="" data-natural-width="1400" data-natural-height="470">
+    <div class="parallax-content-1 opacity-mask" data-opacity-mask="rgba(0, 0, 0, 0.4)">
+        <div class="animated fadeInDown">
+            <h1>Découvrez les Événements</h1>
+            <p>Explorez des événements uniques, où la nature rencontre l'aventure, et où chaque participation contribue à préserver notre planète.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Fin de la section -->
+<div class="card-body">
+    <h5 class="card-title">reservations aux evenemt</h5>
+
+  <!-- Tableau des reservations aux evenemt -->
+{% for response in Reservations %}
+<div class="card mb-3">
+    <div class="card-body">
+        
+        <h6 class="card-subtitle mb-2 text-muted">Reservation: {{ response.evenementss.nom_event }}</h6>
+        
+       
+        
+        <p class="card-text">Description: {{ response.commentaire }}</p>
+        <!-- Formulaire de notation (rating) sous forme d'étoiles -->
+        <form action="{{ path('rate_reservations', {'id': response.id}) }}" method="post" class="rating-form">
+            <div class="rating">
+                {% for star in 1..5 %}
+                   <input type="radio" id="star{{ star }}_{{ response.id }}" name="rating" value="{{ star }}">
+                    <label for="star{{ star }}_{{ response.id }}" title="{{ star }} étoile">&#9733;</label>
+                {% endfor %}
+            </div>
+            <button type="submit">Noter</button>
+        </form>
+        <!-- Fin du formulaire de notation -->
+        <!-- Image de like avec le nombre de likes -->
+        <div class="like-container">
+            <a href="{{ path('like_reservations', {'id': response.id}) }}"><img src="{{ asset('images/like.jpg') }}" alt="Like" class="like-button" width="80" height="50"></a>
+            <span>{{ response.likes }}</span>
+        </div>
+        <!-- Fin de l'image de like -->
+        
+        <!-- Image de dislike avec le nombre de dislikes -->
+        <div class="dislike-container">
+            <a href="{{ path('dislike_reservations', {'id': response.id}) }}"><img src="{{ asset('images/dislike.png') }}" alt="DisLike" class="dislike-button" width="80" height="50"></a>
+            <span>{{ response.dislikes }}</span>
+        </div>
+        <!-- Fin de l'image de dislike -->
+        
+        
+        
+        <div class="btn-group" role="group" aria-label="Actions">
+            <a class="btn cur-p btn-danger" href="{{ path('delete_adh', {'id': response.id}) }}">Supprimer</a>
+            <a class="btn cur-p btn-success" href="{{ path('update_adh', {'id': response.id}) }}">Mettre à jour</a>
+        </div>
+    
+    
+    </div>
+</div>
+{% endfor %}
+
+
+    <div class="pagination">
+        {{ knp_pagination_render(Reservations) }}
+    </div>
+</div>
+{% endblock %}

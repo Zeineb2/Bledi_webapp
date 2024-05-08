@@ -10,6 +10,7 @@ parameters:
     twilio_account_sid: 'ACd38403c241c46e18c569b916ba030047'
     twilio_auth_token: '9239d62c168b08bd103303315170e990'
     twilio_phone_number: '+16603338234'
+    upload_directory: '%kernel.project_dir%/public/uploads/images'
 
 services:
  
