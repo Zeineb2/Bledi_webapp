@@ -1,0 +1,34 @@
+{% extends 'base_front.html.twig' %}
+
+{% block title %}Municipaties index{% endblock %}
+
+{% block body %}
+    <h1>Municipaties index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomMuni</th>
+                <th>AdresseMuni</th>
+                <th>EtatMuni</th>
+                <th>RatingMuni</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for municipaty in municipaties %}
+            <tr>
+                <td>{{ municipaty.id }}</td>
+                <td>{{ municipaty.nomMuni }}</td>
+                <td>{{ municipaty.adresseMuni }}</td>
+                <td>{{ municipaty.etatMuni }}</td>
+                <td>{{ municipaty.ratingMuni }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

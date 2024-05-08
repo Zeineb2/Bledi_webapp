@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ressources{% endblock %}
+
+{% block body %}
+    <h1>Ressources</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdRessource</th>
+                <td>{{ ressource.idRessource }}</td>
+            </tr>
+            <tr>
+                <th>NomRessource</th>
+                <td>{{ ressource.nomRessource }}</td>
+            </tr>
+            <tr>
+                <th>NbrRessource</th>
+                <td>{{ ressource.nbrRessource }}</td>
+            </tr>
+            <tr>
+                <th>NbrDispoRessource</th>
+                <td>{{ ressource.nbrDispoRessource }}</td>
+            </tr>
+            <tr>
+                <th>ImgRessource</th>
+                <td>{{ ressource.imgRessource }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_ressources_index') }}">back to list</a>
+
+    <a href="{{ path('app_ressources_edit', {'idRessource': ressource.idRessource}) }}">edit</a>
+    <a href="{{ path('app_ressource_pdf', {'idRessource': ressource.idRessource}) }}" class="btn btn-info" id="printPdf">PDF</a>
+    {{ include('ressources/_delete_form.html.twig') }}
+<button class="btn btn-success" onclick="printPdf()">Print</button>
+
+    <script>
+        function printPdf() {
+            var pdfWindow = window.open("{{ path('app_ressource_pdf', {'idRessource': ressource.idRessource}) }}", "_blank");
+            pdfWindow.onload = function() {
+                pdfWindow.print();
+            };
+        }
+    </script>
+{% endblock %}

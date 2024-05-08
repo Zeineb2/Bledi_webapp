@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Ressources{% endblock %}
+
+{% block body %}
+    <h1>Create new Ressources</h1>
+
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="mb-3">
+        {{ form_label(form.IDMuni, 'Municipality') }}
+        {{ form_widget(form.IDMuni) }}
+        {{ form_errors(form.IDMuni) }}
+    </div>
+    <div class="mb-3">
+        {{ form_label(form.nomRessource, 'Resource Name') }}
+        {{ form_widget(form.nomRessource) }}
+        {{ form_errors(form.nomRessource) }}
+    </div>
+
+    <div class="mb-3">
+        {{ form_label(form.nbrRessource, 'Total Number of Resources') }}
+        {{ form_widget(form.nbrRessource) }}
+        {{ form_errors(form.nbrRessource) }}
+    </div>
+
+    <!-- Note: Exclude nbrDispoRessource field since it should be set automatically -->
+
+    <div class="mb-3">
+        {{ form_label(form.imgRessource, 'Resource Image') }}
+        {{ form_widget(form.imgRessource) }}
+        {{ form_errors(form.imgRessource) }}
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_ressources_index') }}">Back to list</a>
+{% endblock %}
