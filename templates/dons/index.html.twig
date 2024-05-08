@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dons index{% endblock %}
+
+{% block body %}
+    <h1>Dons </h1>
+  
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nom de Compagne Dons</th>
+                <th>Montant_don</th>
+                <th>Mail_don</th>
+                <th>CIN_don</th>
+                <th>Virement_img</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for don in dons %}
+            <tr>
+                <td>{{ don.compagne.descrip }}</td>
+                <td>{{ don.montantDon }}</td>
+                <td>{{ don.mailDon }}</td>
+                <td>{{ don.CINDon }}</td>
+                <td>{{ don.virementImg }}</td>
+                <td>
+                    <a href="{{ path('app_dons_show', {'id': don.id}) }}">show</a>
+                    <a href="{{ path('app_dons_edit', {'id': don.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_dons_ajouter') }}">Create new</a>
+
+
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const blogItems = document.getElementsByClassName('blog__item');
+        let found = false; // Indicateur pour savoir si au moins un élément correspond au terme de recherche
+
+        for (let i = 0; i < blogItems.length; i++) {
+            const blogItem = blogItems[i];
+            const blogTitle = blogItem.querySelector('h3').textContent.toLowerCase();
+            const blogContent = blogItem.querySelector('.blog__content').textContent.toLowerCase();
+
+            if (blogTitle.includes(searchTerm) || blogContent.includes(searchTerm)) {
+                blogItem.style.display = ''; // Afficher l'élément s'il correspond
+                found = true; // Définir l'indicateur à true
+            } else {
+                blogItem.style.display = 'none';
+            }
+        }
+
+        // Si aucun élément ne correspond au terme de recherche, afficher un message ou effectuer une autre action
+        if (!found) {
+            // Faire quelque chose, par exemple :
+            console.log("Aucun résultat trouvé.");
+        }
+    });
+});
+{% endblock %}

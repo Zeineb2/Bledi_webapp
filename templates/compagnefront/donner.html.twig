@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CompagneDons{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+{% endblock %}
+
+{% block body %}
+    <h1>CompagneDons</h1>
+
+    <table class="table">
+        <tbody>
+           
+            <tr>
+                <th>Date_d</th>
+                <td>{{ compagne_don.dateD ? compagne_don.dateD|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date_f</th>
+                <td>{{ compagne_don.dateF ? compagne_don.dateF|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Montant_e</th>
+                <td>{{ compagne_don.montantE }}</td>
+            </tr>
+            <tr>
+                <th>Descrip</th>
+                <td>{{ compagne_don.descrip }}</td>
+            </tr>
+        </tbody>
+    </table>
+     
+     <h1>Ajouter Votre Dons : </h1>
+
+   <form method="post" novalidate  enctype="multipart/form-data">
+   {{ form_start(form, {'attr': {'class': 'forms-sample'}}) }}
+        <div class="form-group">
+            {{ form_label(form.montant_don) }}
+            {{ form_widget(form.montant_don, {'attr': {'class': 'form-control'}}) }}
+            {% if form.montant_don.vars.errors|length %}
+                <div class="error-message">
+                    {% for error in form.montant_don.vars.errors %}
+                        <span style ="color:red;">{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.mail_don) }}
+            {{ form_widget(form.mail_don, {'attr': {'class': 'form-control'}}) }}
+            {% if form.mail_don.vars.errors|length %}
+                <div class="error-message">
+                    {% for error in form.mail_don.vars.errors %}
+                        <span style ="color:red;">{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.CIN_don) }}
+            {{ form_widget(form.CIN_don, {'attr': {'class': 'form-control'}}) }}
+            {% if form.CIN_don.vars.errors|length %}
+                <div class="error-message">
+                    {% for error in form.CIN_don.vars.errors %}
+                        <span style ="color:red;">{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.virement_img) }}
+            {{ form_widget(form.virement_img, {'attr': {'class': 'form-control'}}) }}
+            {% if form.virement_img.vars.errors|length %}
+                <div class="error-message">
+                    {% for error in form.virement_img.vars.errors %}
+                        <span style ="color:red;">{{ error.message }}</span>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+       
+        
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        {{ form_end(form) }}
+    </form>
+        
+
+    <a href="{{ path('app_compagne_dons_index') }}" class="btn btn-secondary">back to list</a>
+
+{% endblock %}

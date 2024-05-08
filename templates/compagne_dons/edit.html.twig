@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit CompagneDons{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+             font-family: Arial, sans-serif;
+            margin: 20px;
+            font-size: 16px;
+        }
+        h1 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px; /* Augmenter la taille de la police */
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px; 
+            font-weight: bold;
+        }
+         .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-danger {
+            background-color: #dc3545;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-right: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1>Edit CompagneDons</h1>
+
+    {# Afficher les messages flash s'il y en a #}
+    {% for flash_message in app.flashes('error') %}
+        <div class="alert alert-danger" role="alert">
+            {{ flash_message }}
+        </div>
+    {% endfor %}
+
+    <form method="post" class="compagne-dons-form">
+        {{ include('compagne_dons/_form.html.twig', {'button_label': 'Update'}) }}
+    </form>
+
+    <a href="{{ path('app_compagne_dons_index') }}" class="btn btn-secondary">Back to List</a>
+
+    <form action="{{ path('app_compagne_dons_delete', {'id': compagne_don.id}) }}" method="post" style="display: inline-block;">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+{% endblock %}

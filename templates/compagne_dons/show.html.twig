@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Compagnes Dons{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    <style>
+        /* Ajoutez vos styles CSS personnalisés ici si nécessaire */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-warning {
+            background-color: #ffc107;
+        }
+        .btn-primary:hover, .btn-secondary:hover, .btn-warning:hover {
+            background-color: #0056b3;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <h1 style="color: #007bff; text-align: center;">Liste des Dons dans Compagnes Dons</h1>
+
+    <!-- Tableau pour afficher la liste des dons -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nom de Compagne Dons</th>
+                <th>Montant_don</th>
+                <th>Mail_don</th>
+                <th>CIN_don</th>
+                <th>Virement_img</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for don in compagne_don.getDons() %}
+                <tr>
+                    <td>{{ don.compagne.descrip }}</td>
+                    <td>{{ don.montantDon }}</td>
+                    <td>{{ don.mailDon }}</td>
+                    <td>{{ don.CINDon }}</td>
+                    <td>
+                        {% if don.virementImg %}
+                            <img src="data:image/jpeg;base64,{{ don.virementImg }}" alt="Virement Image">
+                        {% else %}
+                            No image
+                        {% endif %}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Bouton pour télécharger le PDF -->
+    <a href="{{ path('app_compagne_dons_pdf', {'id': compagne_don.id}) }}" class="btn btn-primary">Télécharger PDF</a>
+
+    <!-- Bouton pour revenir à la liste -->
+    <a href="{{ path('app_compagne_dons_index') }}" class="btn btn-secondary">Retour à la liste</a>
+
+    <!-- Bouton pour éditer la compagne de dons -->
+    <a href="{{ path('app_compagne_dons_edit', {'id': compagne_don.id}) }}" class="btn btn-warning">Éditer</a>
+{% endblock %}

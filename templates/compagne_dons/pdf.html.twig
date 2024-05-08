@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>CompagneDons PDF</title>
+    <style>
+        /* Styles CSS pour le PDF */
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            text-align: right;
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .title-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #f9f9f9; /* Couleur de fond pour les tableaux */
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Titre en haut à droite -->
+    <div class="header">
+        <span class="title">Bledi</span>
+    </div>
+
+    <!-- Titre pour les détails de la campagne de dons -->
+    <div class="title-container">
+        <h2>Compagne de Dons</h2>
+    </div>
+    <!-- Tableau pour les détails de la campagne de dons -->
+    <table>
+        <tbody>
+            <tr>
+                <th>Description</th>
+                <td>{{ compagne_don.descrip }}</td>
+            </tr>
+            <!-- Ajoutez d'autres détails de la campagne de dons ici si nécessaire -->
+        </tbody>
+    </table>
+
+    <!-- Espace entre les deux tableaux -->
+    <div style="margin-bottom: 50px;"></div>
+
+    <!-- Titre pour la liste des dons -->
+    <div class="title-container">
+        <h2>Liste des Dons</h2>
+    </div>
+    <!-- Tableau pour la liste des dons -->
+    <table>
+        <thead>
+            <tr>
+                <th>Montant</th>
+                <th>Email</th>
+                <th>CIN</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for don in compagne_don.getDons() %}
+                <tr>
+                    <td>{{ don.montantDon }}</td>
+                    <td>{{ don.mailDon }}</td>
+                    <td>{{ don.CINDon }}</td>
+                    <!-- Ajoutez d'autres détails du don ici si nécessaire -->
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">Aucun don trouvé</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

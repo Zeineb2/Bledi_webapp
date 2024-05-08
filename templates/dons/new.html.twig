@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouveau Don{% endblock %}
+
+{% block body %}
+    <h1>Créer un nouveau don</h1>
+
+    <form method="post" action="{{ path('app_dons_ajouter') }}" novalidate>
+        {{ form_start(form, {'attr': {'class': 'forms-sample'}}) }}
+
+        <div class="form-group">
+            {{ form_label(form.montant_don) }}
+            {{ form_widget(form.montant_don, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.montant_don) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.mail_don) }}
+            {{ form_widget(form.mail_don, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.mail_don) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.CIN_don) }}
+            {{ form_widget(form.CIN_don, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.CIN_don) }}
+        </div>
+
+        <div class="form-group">
+            {{ form_label(form.virement_img) }}
+            {{ form_widget(form.virement_img, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.virement_img) }}
+        </div>
+
+       
+
+        <button type="submit" class="btn btn-danger">Enregistrer</button>
+        <a href="{{ path('app_dons_index') }}" class="btn btn-secondary">Retour à la liste</a>
+
+        {{ form_end(form) }}
+    </form>
+{% endblock %}
