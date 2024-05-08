@@ -6,6 +6,7 @@
 parameters:
     google_recaptcha_site_key: 6LeYkc0pAAAAAN_0FCQUegrv30Gvo42Z4JXZl3nO
     image_directory: '%kernel.project_dir%/public/uploaded/ressources'
+    uploads: '%kernel.project_dir%/public/uploads/reclamations'
 
 services:
  

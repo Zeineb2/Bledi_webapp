@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{# {% block title %}Evenement index{% endblock %} #}
+
+{% block body %}
+    {# <h4>Categorie index</h4> #}
+<div style="width:50%; margin-left:auto; margin-right:auto;">
+ <a href="{{ path('app_reclamations_tri') }}" class="btn btn-primary px-3 py-1">Trier Selon Priorite</a>
+    <table class="table" >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>localisation</th>
+                <th>Date</th>
+                <th>Image</th>
+                <th>description</th>
+                <th>Categorie</th>
+                
+                <th style="padding-left:60px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rec in reclamations %}
+            <tr>
+                <td>{{ rec.idRec }}</td>
+                <td>{{ rec.localisationRec }}</td>
+                <td>{{rec.date ? rec.date|date('Y-m-d') : '' }}
+                <td><img src="{{ asset('uploads/reclamations/' ~rec.imgRec) }}" style=" width:50px; height:50px; " alt="bonjour"/></td>
+                <td>{{ rec.descriptionRec }}</td>
+                  <td>{{ rec.categorie.name }}</td>
+             
+                <td>
+                <table>
+                <tbody>
+                  <td>
+                   <a href="{{ path('edit_reclamations', {'id': rec.idRec}) }}"  class="btn btn-primary px-3 py-1">Modifier</a>
+                   </td>
+                   <td>
+                    <a href="{{ path('delete_reclamations', {'id': rec.idRec}) }}"  class="btn btn-primary px-3 py-1">Supprimer </a>
+                 </td>  
+                  <td>
+                    <a href="{{ path('add_Reponse', {'id': rec.idRec}) }}"  class="btn btn-primary px-3 py-1">Repondre </a>
+                 </td> 
+                  
+                 </tbody>
+                 </table>
+                 </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('add_reclamations') }}" class="btn btn-primary px-3 py-1">Nouvel Reclamation</a>
+    </div>
+
+    
+{% endblock %}
+{% block footer  %}
+{% endblock %}
+

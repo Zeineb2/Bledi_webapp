@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add Category{% endblock %}
+
+{% block body %}
+    <center><h5>Add Category</h5></center>
+<div style="width:50%; margin-left:auto; margin-right:auto;">
+     {{ include('categorierec/_form.html.twig', {'button_label': 'ADD'}) }}
+     {# <a href="{{ path('app_evenement') }}" class="btn btn-primary px-3 py-1">Retour</a> #}
+</div>
+    {# <td>
+    <a href="{{ path('app_evenement') }}" class="btn btn-primary px-3 py-1">Retour</a>
+</td> #}
+    
+{% endblock %}

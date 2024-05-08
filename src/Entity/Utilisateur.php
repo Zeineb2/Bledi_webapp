@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-
-
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UtilisateurRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;

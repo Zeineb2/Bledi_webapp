@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Evenement{% endblock %}
+
+{% block body %}
+    <center><h5>Modifier Reclamations</h5></center>
+<div style="width:50%; margin-left:auto; margin-right:auto;">
+     {{ include('reclamations/_form.html.twig', {'button_label': 'Modifier'}) }}
+</div>
+    {# <td>
+    <a href="{{ path('app_evenement') }}" class="btn btn-primary px-3 py-1">Retour</a>
+</td> #}
+    
+{% endblock %}
