@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Solution{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>New Solution</h1>
+
+        {# Display Flash Messages for Errors #}
+        {% for flashMessage in app.session.flashbag.get('error') %}
+            <div class="alert alert-danger">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+                <div class="form-group">
+                    {{ form_label(form.descriptionSol, 'Description') }}
+                    {{ form_widget(form.descriptionSol, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.descriptionSol) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.datedSol, 'Start Date') }}
+                    {{ form_widget(form.datedSol, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.datedSol) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.datefSol, 'End Date') }}
+                    {{ form_widget(form.datefSol, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.datefSol) }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    {{ form_label(form.etatSol, 'State') }}
+                    {{ form_widget(form.etatSol, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.etatSol) }}
+                </div>
+                <div class="form-group">
+                    {{ form_label(form.budgetSol, 'Budget') }}
+                    {{ form_widget(form.budgetSol, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.budgetSol) }}
+                </div>
+                <div class="form-group">
+                    <label for="idRec" class="form-label">Reclamation ID</label>
+                    <select id="idRec" name="reclamations[idRec]" class="form-control">
+                        <option value="">Select a Reclamation</option>
+                        {% for reclamation in reclamations %}
+                            <option value="{{ reclamation.idRec }}">{{ reclamation.descriptionRec }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+                {{ form_end(form) }}
+                <a href="{{ path('app_solutions_index') }}" class="btn btn-secondary mt-3">Back to List</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

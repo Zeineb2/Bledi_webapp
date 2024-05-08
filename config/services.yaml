@@ -7,6 +7,9 @@ parameters:
     google_recaptcha_site_key: 6LeYkc0pAAAAAN_0FCQUegrv30Gvo42Z4JXZl3nO
     image_directory: '%kernel.project_dir%/public/uploaded/ressources'
     uploads: '%kernel.project_dir%/public/uploads/reclamations'
+    twilio_account_sid: 'ACd38403c241c46e18c569b916ba030047'
+    twilio_auth_token: '9239d62c168b08bd103303315170e990'
+    twilio_phone_number: '+16603338234'
 
 services:
  

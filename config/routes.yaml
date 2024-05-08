@@ -1,6 +1,14 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+
+app_solutions_autocomplete:
+  path: /solutions/autocomplete
+  controller: 'App\Controller\SolutionsController::autocomplete'
+  methods: [GET]
+
+# Define your existing routes below
+index:
+  path: /
+  controller: App\Controller\DefaultController::index
 app_verify_email:
     path: /verify/email
     controller: App\Controller\RegistrationController::verifyUserEmail

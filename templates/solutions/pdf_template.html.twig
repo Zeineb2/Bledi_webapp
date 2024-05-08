@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Solution PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 16px;
+            line-height: 1.6;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative; /* Add position relative to position absolute logo and signature */
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+            font-weight: bold;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+        .signature {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        .logo img {
+            max-width: 200px;
+            max-height: 100px;
+        }
+        .signature img {
+            max-width: 150px;
+            max-height: 50px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="logo">
+        <img src="https://www.dropbox.com/scl/fi/rayyenawe18mnpoypkrlv/image_2024-04-17_160149071-Photoroom.png-Photoroom.png?rlkey=2qbq8vdtjey1wuexjarlau18f&st=5n7amcwp&dl=0" alt="Logo">
+    </div>
+
+    <h1>Solution Information</h1>
+    <table>
+        <tr>
+            <th>Description</th>
+            <td>{{ solution.descriptionSol }}</td>
+        </tr>
+        <tr>
+            <th>Date Start</th>
+            <td>{{ solution.datedSol ? solution.datedSol|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Date End</th>
+            <td>{{ solution.datefSol ? solution.datefSol|date('Y-m-d') : '' }}</td>
+        </tr>
+        <tr>
+            <th>Budget</th>
+            <td>{{ solution.budgetSol }}</td>
+        </tr>
+    </table>
+
+    <div class="signature">
+        <img src="signature.png" alt="Signature">
+    </div>
+
+</div>
+</body>
+</html>
