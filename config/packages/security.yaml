@@ -43,7 +43,10 @@ security:
 
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/citoyen, roles: ROLE_USER }
-         - { path: ^/citoyen, roles: ROLE_AGENT }
+         - { path: ^/agent, roles: ROLE_AGENT }
+         - { path: ^/config, roles: [ROLE_AGENT, ROLE_ADMIN] }
+         - { path: ^/config, roles: [ROLE_USER, ROLE_ADMIN] }
+         
 
 when@test:
     security:

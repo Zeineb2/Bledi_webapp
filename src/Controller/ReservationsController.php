@@ -59,7 +59,7 @@ $string = $censor->censorString($Reservations->getCommentaire());
             'form' => $form->createView()
         ]) ;
     }
-    #[Route('/afficher_reservations', name: 'afficher_reservations')]
+    #[Route('/admin/afficher_reservations', name: 'afficher_reservations')]
     public function AfficheReservations (ReservationsRepository $repo ,PaginatorInterface $paginator ,Request $request     ): Response
     {
         //$repo=$this ->getDoctrine()->getRepository(Reservations::class) ;
