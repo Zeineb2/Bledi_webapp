@@ -38,50 +38,50 @@ class CompagnefrontController extends AbstractController
         ]);
     }
     
-    // #[Route('/{id}', name: 'app_compagnefront_donner', methods: ['GET','POST'])]
-    // public function show(string $id, Request $request, EntityManagerInterface $entityManager): Response
-    // {
-    //     // Find the CompagneDons object by id
-    //     $compagneDon = $entityManager->getRepository(CompagneDons::class)->find($id);
+    #[Route('compagnedons/{id}', name: 'app_compagnefront_donner', methods: ['GET','POST'])]
+    public function show(string $id, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        // Find the CompagneDons object by id
+        $compagneDon = $entityManager->getRepository(CompagneDons::class)->find($id);
     
-    //     // Check if the CompagneDons object is found
-    //     if (!$compagneDon) {
-    //         throw $this->createNotFoundException('CompagneDons object not found');
-    //     }
+        // Check if the CompagneDons object is found
+        if (!$compagneDon) {
+            throw $this->createNotFoundException('CompagneDons object not found');
+        }
     
-    //     $don = new Dons();
+        $don = new Dons();
     
-    //     $form = $this->createForm(DonsType::class, $don);
-    //     $form->handleRequest($request);
-    //     $don->setCompagne($compagneDon);
+        $form = $this->createForm(DonsType::class, $don);
+        $form->handleRequest($request);
+        $don->setCompagne($compagneDon);
        
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $file = $form['virement_img']->getData();
-    //         $don->setVirementImg("aa");
-    //         // Convert uploaded image to base64
-    //         if ($file) {
-    //             // Convertir l'image base64 en binaire
-    //             $base64Image = base64_encode(file_get_contents($file->getPathname()));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['virement_img']->getData();
+            $don->setVirementImg("aa");
+            // Convert uploaded image to base64
+            if ($file) {
+                // Convertir l'image base64 en binaire
+                $base64Image = base64_encode(file_get_contents($file->getPathname()));
     
-    //             // Enregistrer l'image binaire dans l'entité
-    //             $don->setVirementImg($base64Image);
-    //         }
+                // Enregistrer l'image binaire dans l'entité
+                $don->setVirementImg($base64Image);
+            }
     
-    //         // Store base64 image in your entity
-    //         // $don->setVirementImg($base64Image);
-    //         $don->setCompagne($compagneDon);
-    //         $entityManager->persist($don);
-    //         $entityManager->flush();
+            // Store base64 image in your entity
+            // $don->setVirementImg($base64Image);
+            $don->setCompagne($compagneDon);
+            $entityManager->persist($don);
+            $entityManager->flush();
     
-    //         return $this->redirectToRoute('app_compagnefront', [], Response::HTTP_SEE_OTHER);
-    //     }
+            return $this->redirectToRoute('app_compagnefront', [], Response::HTTP_SEE_OTHER);
+        }
     
-    //     return $this->render('compagnefront/donner.html.twig', [
-    //         'compagne_don' => $compagneDon,
-    //         'don' => $don,
-    //         'form' => $form->createView(),
-    //     ]);
-    // }
+        return $this->render('compagnefront/donner.html.twig', [
+            'compagne_don' => $compagneDon,
+            'don' => $don,
+            'form' => $form->createView(),
+        ]);
+    }
 
    
 

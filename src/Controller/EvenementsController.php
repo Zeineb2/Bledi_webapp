@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Snipe\BanBuilder\CensorWords;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Symfony\Component\Security\Core\Security;
 
 class EvenementsController extends AbstractController
 {
@@ -174,19 +175,36 @@ public function afficher_evenementsBack(EvenementsRepository $repo, PaginatorInt
  
     #[Route('/reserver/{id}', name: 'reserver')]
     
-public function reserver(Request  $request , ManagerRegistry $doctrine): Response
+public function reserver(Request  $request , ManagerRegistry $doctrine, Security $security): Response
  {
-     $Reservations =  new Reservations() ;
-        $form =  $this->createForm(ReservationsType::class,$Reservations) ;
-        $form->add('Ajouter' , SubmitType::class) ;
-        $form->handleRequest($request) ;
-        if($form->isSubmitted()&& $form->isValid()){
-            
-            return $this ->redirectToRoute('add_Reservations') ;
-        }
-        return $this->render('reservations/frontadd.html.twig' , [
-            'form' => $form->createView()
-        ]) ;
+    $Reservations =  new Reservations();
+    $Reservations->setEvenementss($doctrine->getRepository(Evenements::class)->find($request->get('id')));
+    $user = $security->getUser();
+    if (method_exists($user, 'getCin')) {
+        $Reservations->setCINCit($user->getCin());
+    }
+    $form =  $this->createForm(ReservationsType::class, $Reservations);
+    $form->add('Ajouter', SubmitType::class);
+    $form->handleRequest($request);
+    $censor = new CensorWords; // censor
+    $langs = array('fr', 'it', 'en-us', 'en-uk', 'es');
+    $badwords = $censor->setDictionary($langs);
+    $censor->setReplaceChar("*");
+    if ($form->isSubmitted() && $form->isValid()) {
+        $Reservations = $form->getData();
+        $string = $censor->censorString($Reservations->getCommentaire());
+        $Reservations->setCommentaire($string['clean']);
+
+        $em = $doctrine->getManager();
+        $em->persist($Reservations);
+        $em->flush();
+
+        return $this->redirectToRoute('add_Reservations');
+    }
+
+    return $this->render('reservations/frontadd.html.twig', [
+        'form' => $form->createView()
+    ]);
  }
  
 

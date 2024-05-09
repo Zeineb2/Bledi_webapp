@@ -19,8 +19,14 @@ class UtilisateurType extends AbstractType
             ->add('adresse')
             ->add('rate')
             ->add('pwd')
-            ->add('role', null, [
-                'required' => false,
+            ->add('role', ChoiceType::class, [
+                'choices' => [
+                    'Admin' => 'ROLE_ADMIN',
+                    'Citoyen' => 'ROLE_CITOYEN',
+                    'Agent municipal' => 'ROLE_AGENT',
+                ],
+                'required' => true,
+                'placeholder' => 'Choisir un rôle',
             ])
             ->add('posteAg')
             ->add('idMuni')

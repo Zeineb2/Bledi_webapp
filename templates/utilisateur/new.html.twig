@@ -64,27 +64,10 @@
                     {{ form_errors(form.idMuni) }}
                 </div>
                 <div class="form-group">
-    {{ form_label(form.role, 'Rôle') }}
-    {% set roleWidget = form_widget(form.role, {
-        'attr': {'class': 'form-control'},
-        'choice_label': 'Choisir un rôle',
-        'choices': {
-            'ROLE_ADMIN': 'Admin',
-            'ROLE_CITOYEN': 'Citoyen',
-            'ROLE_AGENT': 'Agent municipal'
-        }
-    }) %}
-    {% set roleLabel = form_label(form.role, 'Rôle') %}
-    {% set roleErrors = form_errors(form.role) %}
-    {% set dropdown = '<select id="role" name="role" class="form-control">
-        <option value="">Choisir un rôle</option>
-        <option value="ROLE_ADMIN">Admin</option>
-        <option value="ROLE_CITOYEN">Citoyen</option>
-        <option value="ROLE_AGENT">Agent municipal</option>
-    </select>' %}
-    {{ roleLabel|replace({ '</label>': '</label>' ~ dropdown })|raw }}
-    {{ roleErrors }}
-</div>
+                {{ form_label(form.role, 'Rôle') }}
+                {{ form_widget(form.role) }}
+                {{ form_errors(form.role) }}
+                </div>
 
                 </div>
                 <button type="submit" class="btn btn-primary">Enregistrer</button>
